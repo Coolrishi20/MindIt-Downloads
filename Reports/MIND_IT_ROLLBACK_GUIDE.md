@@ -88,6 +88,10 @@ The web link was last republished at build 124 (alternate builds: 116, 118, 120,
 
 ---
 
+## Older builds on GitHub (since build 126)
+
+Your private **MindIt-Downloads** page keeps every build since 125 in its history (build 119, the rollback build, is not there — use the files described above): open **Commits**, pick the build (each commit says its build number), press **Browse files**, and download from there. The rollback steps above are the same whichever way you get the older files.
+
 ## Source code
 
 - Build 119: tag `checkpoint-build119` (commit `2eefd72`); build 120: tag `checkpoint-build120` (`da1753e`); build 121: tag `checkpoint-build121` (`c926b63`); build 122: tag `checkpoint-build122` (`e02d349`); build 123: tag `checkpoint-build123` (`9b2c15b`); build 124: tag `checkpoint-build124` (`ed2cc27`); build 125: tag `checkpoint-build125`.

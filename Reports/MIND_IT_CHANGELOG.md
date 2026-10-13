@@ -2,7 +2,12 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 125 (12–13 October 2026)
+## Release notes — builds 116 → 126 (12–13 October 2026)
+
+### Build 126 — Mind It! on the home screen (13 October)
+- 📲 **Add to Home Screen** on an iPhone or iPad (Safari → Share → Add to Home Screen) now gives a proper **Mind It!** icon — the gold M logo — that opens the team-phone page or the 📱 Phone Remote **full-screen**, without Safari's address bar (Complete Guide 8.6). Android phones get the same icon (Chrome opens it as a normal tab).
+- **Downloads on GitHub:** your private **MindIt-Downloads** page holds each build as single complete files (no parts), including the new **webpage version** `mindit.html` (Complete Guide 4.1c).
+- Nothing else changes: game screens, rules and saved data are the same as build 125.
 
 ### Build 125 — five improvements (13 October)
 - 🗑 **Recently Deleted**: bring a deleted player back — profile, picture and statistics — for 30 days.
@@ -56,7 +61,7 @@ This is a condensed history of the original development chat (676 turns, late Se
 **Version scheme:**
 - The visible version went 1.0 → 1.1.0 → 1.2.0 … 1.94, then was **reset to 1.69** at Android build 18 and **frozen**.
 - The user's 1.69 spec said: "DO NOT change the version number again after this update… Keep the version at 1.69 for all future work until I explicitly instruct you to change it."
-- Since then only the internal Android versionCode rises, one per APK: **18 → 125**.
+- Since then only the internal Android versionCode rises, one per APK: **18 → 126**.
 
 ---
 
@@ -132,7 +137,7 @@ This is a condensed history of the original development chat (676 turns, late Se
 | **1.90** / 13 | ◐ Landscape alignment + **theme-adaptive logos**, TV-safe margins (targeted fixes, not a full redesign) [t265] |
 | **1.91–1.94** / 14–17 | ✅ Final-only question upload; ✅ "⬆ Import Template" to the library; ✅ tablet picture sync fix; ✅ **iPhone HEIC** photos [t267–t277] |
 
-## Phase 3 — Version frozen at 1.69 (Android builds 18 → 125)
+## Phase 3 — Version frozen at 1.69 (Android builds 18 → 126)
 
 | Builds | Main changes |
 |---|---|
@@ -173,6 +178,7 @@ This is a condensed history of the original development chat (676 turns, late Se
 | **123** (13 Oct) | ✅ build 123 (13 Oct, `app112.js`, user chose 2B and “leave it” for team photos; asked for the EXE, APK, “the apple installation file” and the guides in one release): restoring a backup or loading a game file **always asks first** (Restore Backup / Load File / Cancel), even with no game running; player-profile files still merge without asking. ✅ **Mac laptop app** on the user's explicit request (Apple Silicon + Intel zip, ad-hoc signed, not run on a real Mac). Team photos stay in the save (B37, as decided). `fix123` 13/13. |
 | **124** (13 Oct) | ✅ build 124 (13 Oct, `app113.js`, user: “I want the ability to delete players from the database … next time onwards the mac should only be for apple silicon”): 🗑 **Delete a player** from Player Profiles (asks first; past games keep the name; not while playing; sync keeps it deleted; a backup restore brings them back). Mac app now Apple Silicon only. Before/after shown (laptop, tablet landscape and portrait). `fix124` 19/19. |
 | **125** (13 Oct) | ✅ build 125 (13 Oct, `app114.js` + `app113.js`/`app112.js` updates + CSS, user: “do them all and show the before and after”): 🗑 **Recently Deleted** (restore a deleted player — profile, picture, stats — for 30 days; then only the name stays); 🛟 **Safety backups** (IndexedDB, last 10, made before a restore / file load, player or record deletion, Start fresh / New quiz; Restore or Save File from Backups & Restore); ☑ **Select** several players → Archive / Delete; the **tablet keeps what you type** (Adjust Score and other boxes) through a redraw; 🖼 **Results Picture** for any Historic Game (the existing recap card, drawn from the record). Before/after images shown. `fix125` 27/27, `fix125d` 9/9. |
+| **126** (13 Oct) | ✅ build 126 (13 Oct, `build.py` head + `vendor/touch-icon-180.png`/`-192.png`, user: “ok do both, include the webpage as a download option in github”): **📲 home-screen support** — `apple-mobile-web-app-capable`, black status bar, title “Mind It!”, theme colour `#03051c`, the gold M logo as a full-bleed 180×180 `apple-touch-icon` (and a 192×192 `icon`), so Safari **Share → Add to Home Screen** on an iPhone/iPad gives a proper icon that opens the team-phone page or the 📱 Phone Remote full-screen (Guide 8.6). No game-screen changes. **Downloads on GitHub:** the private repo `MindIt-Downloads` holds each build as single files (EXE, APK, Mac zip, guides, reports) plus **`Web/mindit.html`** — the webpage version (Guide 4.1c). Web link republished (alternate builds). Tests `fix126` 8/8, `fix126d` 13/13 (Chromium with iPhone emulation, not real Safari). |
 
 ---
 
