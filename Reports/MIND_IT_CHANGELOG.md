@@ -2,7 +2,14 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 128 (12–16 October 2026)
+## Release notes — builds 116 → 129 (12–16 October 2026)
+
+### Build 129 — device names, Add Phone Remote, the tablet keeps hosting, offline webpage (16 October)
+- **Rename devices** in Connected Devices (📲 Connect ▾ → Connect Device), on the laptop or a hosting Galaxy Tab — e.g. *Quiz Desk* or *Backstage phone*. Names are kept after reconnects and restarts.
+- **📱 Add Phone Remote is always there** on the remote in control, also after it reconnected without the PIN.
+- **The Galaxy Tab keeps hosting** when its screen goes off or another app is opened; a notification says *Mind It! is hosting a quiz*. 🟡 Not yet tried on a real tablet.
+- **Other Galaxy Tabs find the tablet's game:** their start screen shows **Tablet Game Found → Connect**. 🟡 Not yet tried on real tablets.
+- **The webpage works with no internet** once opened (https://coolrishi20.github.io/MindIt-Web/); with internet it loads the newest build first.
 
 ### Build 128 — trusted devices, one controller, the tablet as the server (16 October)
 - **Trusted devices:** a remote (Galaxy Tab, iPad, iPhone or the 📱 Phone Remote) connects once with the PIN and is remembered — after a Wi-Fi drop or a restart of the laptop or the device it reconnects by itself, without the PIN.

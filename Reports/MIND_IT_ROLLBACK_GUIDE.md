@@ -96,6 +96,8 @@ Your private **MindIt-Downloads** page keeps every build since 125 in its histor
 
 Build 128 remembers trusted remotes in a small file next to your data (`trusted-devices.json`). An older build ignores it, so after rolling back each remote simply connects with the PIN again. Going forward again, the remembered devices are still there.
 
+Build 129 adds device names to the same file. Build 128 ignores the names (the devices stay trusted and show their own names again); going forward to 129 the names come back. The Galaxy Tab APK of build 128 installs over 129 only after uninstalling (Android refuses a lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22).
+
 ## Source code
 
 - Build 119: tag `checkpoint-build119` (commit `2eefd72`); build 120: tag `checkpoint-build120` (`da1753e`); build 121: tag `checkpoint-build121` (`c926b63`); build 122: tag `checkpoint-build122` (`e02d349`); build 123: tag `checkpoint-build123` (`9b2c15b`); build 124: tag `checkpoint-build124` (`ed2cc27`); build 125: tag `checkpoint-build125`.
