@@ -2,7 +2,13 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 126 (12–13 October 2026)
+## Release notes — builds 116 → 127 (12–16 October 2026)
+
+### Build 127 — an iPad or iPhone as the full remote (16 October)
+- 📲 **Connect Tablet is now called Connect Device** (in the Connect ▾ menu, Setup → 6 · Advanced and the Devices window) and shows two codes: **Galaxy Tab** (as before) and **iPad / iPhone**. Scan the second one with the Camera and Safari opens the same full Quizmaster remote the Galaxy Tab uses — no app to install (Complete Guide, Setup B2).
+- Add it to the home screen for a **Mind It!** icon; it keeps working after the laptop app is restarted (same Wi-Fi, same PIN).
+- On an iPhone the remote's board now fits the screen — all six columns, nothing cut off.
+- The webpage version is also online for iPhones and iPads: **https://coolrishi20.github.io/MindIt-Web/** (it runs the quiz on its own; it can't be a remote for the laptop).
 
 ### Build 126 — Mind It! on the home screen (13 October)
 - 📲 **Add to Home Screen** on an iPhone or iPad (Safari → Share → Add to Home Screen) now gives a proper **Mind It!** icon — the gold M logo — that opens the team-phone page or the 📱 Phone Remote **full-screen**, without Safari's address bar (Complete Guide 8.6). Android phones get the same icon (Chrome opens it as a normal tab).
@@ -61,7 +67,7 @@ This is a condensed history of the original development chat (676 turns, late Se
 **Version scheme:**
 - The visible version went 1.0 → 1.1.0 → 1.2.0 … 1.94, then was **reset to 1.69** at Android build 18 and **frozen**.
 - The user's 1.69 spec said: "DO NOT change the version number again after this update… Keep the version at 1.69 for all future work until I explicitly instruct you to change it."
-- Since then only the internal Android versionCode rises, one per APK: **18 → 126**.
+- Since then only the internal Android versionCode rises, one per APK: **18 → 127**.
 
 ---
 
@@ -137,7 +143,7 @@ This is a condensed history of the original development chat (676 turns, late Se
 | **1.90** / 13 | ◐ Landscape alignment + **theme-adaptive logos**, TV-safe margins (targeted fixes, not a full redesign) [t265] |
 | **1.91–1.94** / 14–17 | ✅ Final-only question upload; ✅ "⬆ Import Template" to the library; ✅ tablet picture sync fix; ✅ **iPhone HEIC** photos [t267–t277] |
 
-## Phase 3 — Version frozen at 1.69 (Android builds 18 → 126)
+## Phase 3 — Version frozen at 1.69 (Android builds 18 → 127)
 
 | Builds | Main changes |
 |---|---|
@@ -179,6 +185,7 @@ This is a condensed history of the original development chat (676 turns, late Se
 | **124** (13 Oct) | ✅ build 124 (13 Oct, `app113.js`, user: “I want the ability to delete players from the database … next time onwards the mac should only be for apple silicon”): 🗑 **Delete a player** from Player Profiles (asks first; past games keep the name; not while playing; sync keeps it deleted; a backup restore brings them back). Mac app now Apple Silicon only. Before/after shown (laptop, tablet landscape and portrait). `fix124` 19/19. |
 | **125** (13 Oct) | ✅ build 125 (13 Oct, `app114.js` + `app113.js`/`app112.js` updates + CSS, user: “do them all and show the before and after”): 🗑 **Recently Deleted** (restore a deleted player — profile, picture, stats — for 30 days; then only the name stays); 🛟 **Safety backups** (IndexedDB, last 10, made before a restore / file load, player or record deletion, Start fresh / New quiz; Restore or Save File from Backups & Restore); ☑ **Select** several players → Archive / Delete; the **tablet keeps what you type** (Adjust Score and other boxes) through a redraw; 🖼 **Results Picture** for any Historic Game (the existing recap card, drawn from the record). Before/after images shown. `fix125` 27/27, `fix125d` 9/9. |
 | **126** (13 Oct) | ✅ build 126 (13 Oct, `build.py` head + `vendor/touch-icon-180.png`/`-192.png`, user: “ok do both, include the webpage as a download option in github”): **📲 home-screen support** — `apple-mobile-web-app-capable`, black status bar, title “Mind It!”, theme colour `#03051c`, the gold M logo as a full-bleed 180×180 `apple-touch-icon` (and a 192×192 `icon`), so Safari **Share → Add to Home Screen** on an iPhone/iPad gives a proper icon that opens the team-phone page or the 📱 Phone Remote full-screen (Guide 8.6). No game-screen changes. **Downloads on GitHub:** the private repo `MindIt-Downloads` holds each build as single files (EXE, APK, Mac zip, guides, reports) plus **`Web/mindit.html`** — the webpage version (Guide 4.1c). Web link republished (alternate builds). Tests `fix126` 8/8, `fix126d` 13/13 (Chromium with iPhone emulation, not real Safari). |
+| **127** (16 Oct) | ✅ build 127 (16 Oct, `app115.js` + `style.css` + desktop `main.js` route, user asked whether the iPhone webpage could be a remote for the laptop quiz, then “do it”; then “change connect tablet into connect device”): **📲 Connect Tablet renamed Connect Device** everywhere (dialog, Connect ▾ menu, Setup → 6 · Advanced card + button, Devices panel button, *Show Device QR / PIN*); it shows two codes — **Galaxy Tab** (unchanged `MINDIT1|…`) and **iPad / iPhone**, a web address `http://<laptop>/tablet?remote=…&s=…&t=<PIN>` the Camera opens in Safari; the laptop app serves the page at **`/tablet`**; there the remote asks `/api/link/info` for the current game number before each (re)connect, so a home-screen icon survives a laptop restart (PIN still required; New PIN still disconnects); under 600 px the remote board uses `minmax(0,1fr)` columns and smaller tiles so all columns fit an iPhone. The GitHub-hosted webpage (`MindIt-Web`, https) can't reach the laptop (mixed content) — explained to the user. Test `fix127d` 19/19 (Chromium iPhone/iPad emulation). Also new: public repo `Coolrishi20/MindIt-Web` hosts the webpage via GitHub Pages (https://coolrishi20.github.io/MindIt-Web/). |
 
 ---
 
