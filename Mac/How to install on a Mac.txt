@@ -1,4 +1,4 @@
-Mind It! for Mac (v1.69, build 129) - Apple Silicon Macs (M1, M2, M3, M4), macOS 11 or newer
+Mind It! for Mac (v1.69, build 130) - Apple Silicon Macs (M1, M2, M3, M4), macOS 11 or newer
 
 1. Check: Apple menu > About This Mac should say "Chip: Apple M..." (Intel Macs are not supported).
 2. Download "Mind It! for Mac (Apple Silicon).zip" from this folder (one file, about 100 MB).

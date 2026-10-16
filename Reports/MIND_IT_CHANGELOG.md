@@ -2,7 +2,12 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 129 (12–16 October 2026)
+## Release notes — builds 116 → 130 (12–16 October 2026)
+
+### Build 130 — TVs over the Wi-Fi, moving a tablet quiz to the laptop, five smaller upgrades (16 October)
+- **📡 Audience Screens:** any TV or computer with a web browser on the same Wi-Fi shows the audience screen — no cable, no app, no casting. 📺 Audience View ▾ → 📡 Connect Audience Screen shows the address (`…/tv`). Several screens at once; rename them, set a safe margin, test, refresh or disconnect them. Works from the laptop and the Galaxy Tab. Only the audience picture is sent: your controls, answers before they're revealed, wagers, PINs and players never leave your device. 🟡 Not yet tried on a real smart-TV browser.
+- **💻 Take Over Tablet Quiz:** a quiz running on the Galaxy Tab moves to the laptop while it runs — scores, question, Daily Doubles and wagers, chips, the countdown, the Final — after the tablet's Quizmaster approves. Phones keep their team (no code to type), remotes and TVs follow, and the tablet becomes the Quizmaster remote. Only one device ever hosts. 🟡 Not yet tried with a real Galaxy Tab.
+- **🧪 Test Hosting** (Connect Device → Run Test), a **🔋 battery warning** while hosting, **🔒 lock the remote** (press and hold to unlock), a **▂▄▆ signal** for every remote in Connected Devices, and the Windows joiner now checks the file's **fingerprint** (SHA-256).
 
 ### Build 129 — device names, Add Phone Remote, the tablet keeps hosting, offline webpage (16 October)
 - **Rename devices** in Connected Devices (📲 Connect ▾ → Connect Device), on the laptop or a hosting Galaxy Tab — e.g. *Quiz Desk* or *Backstage phone*. Names are kept after reconnects and restarts.
