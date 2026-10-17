@@ -3,13 +3,13 @@
 <!-- LATEST-START (this section is rewritten automatically each time a release is published) -->
 ## ⬇️ Download Mind It! — Latest Version
 
-**Mind It! v1.69 · Build 131** · released 17 October 2026 — *build 132 appears here as soon as its release is published*
+**Mind It! v1.69 · Build 132** · released 17 October 2026
 
-- 🪟 **Windows laptop** — [Download for Windows](https://github.com/Coolrishi20/MindIt-Downloads/raw/main/Windows/Mind%20It!.exe) (.exe, 69.1 MB)
-- 📲 **Galaxy Tab (Android)** — [Download for Android](https://github.com/Coolrishi20/MindIt-Downloads/raw/main/Android/Mind%20It!%20for%20Android%20(Galaxy%20Tab).apk) (.apk, 1.7 MB)
-- 🍎 **Mac (Apple Silicon)** — [Download for Mac](https://github.com/Coolrishi20/MindIt-Downloads/raw/main/Mac/Mind%20It!%20for%20Mac%20(Apple%20Silicon).zip) (.zip, 100.3 MB)
-- 🌐 **Web, iPhone or iPad** — [Open the web version](https://coolrishi20.github.io/MindIt-Web/) (nothing to install) · [download the page](https://github.com/Coolrishi20/MindIt-Downloads/raw/main/Web/mindit.html)
-- 📘 **Guides** — [Guides folder](Guides/)
+- 🪟 **Windows laptop** — [Download for Windows](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Windows.exe) (.exe, 69.1 MB)
+- 📲 **Galaxy Tab (Android)** — [Download for Android](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Android-Galaxy-Tab.apk) (.apk, 1.7 MB)
+- 🍎 **Mac (Apple Silicon)** — [Download for Mac](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Mac-Apple-Silicon.zip) (.zip, 100.3 MB)
+- 🌐 **Web, iPhone or iPad** — [Open the web version](https://coolrishi20.github.io/MindIt-Web/) (nothing to install) · [download the page](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/mindit.html)
+- 📘 **Guides** — [The Complete Idiot's Guide](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Complete-Idiots-Guide.pdf) · [Quick Start](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Quick-Start.pdf) · [Quizmaster Cheat Sheet](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Quizmaster-Cheat-Sheet.pdf) · [Rehearsal Checklist](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Rehearsal-Checklist.pdf) · [Players' Guide](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Players-Guide.pdf)
 
 **[View All Previous Versions →](https://github.com/Coolrishi20/MindIt-Downloads/releases)**
 <!-- LATEST-END -->
