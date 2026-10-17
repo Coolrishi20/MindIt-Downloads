@@ -53,7 +53,8 @@ published and you see a red ✗ in the **Actions** tab. You can still start it b
 ## Storage
 
 - **The repository (git):** from build 132 on, it only grows by text (README, reports). Its history up to build 131 stays as it is
-  (no history rewriting). The staged build lives on `release-staging` until it's published; GitHub cleans up the deleted
+  (no history rewriting); the build-131 app and PDF files were taken out of the current files in build 134 (owner: "Remove the old
+  build-131 app files"), so they're only in the history and in the releases. The staged build lives on `release-staging` until it's published; GitHub cleans up the deleted
   branch's data on its own schedule.
 - **Release files:** stored by GitHub with the release, outside the repository's git history; up to 2 GB per file.
 - **Actions artifacts:** not used.

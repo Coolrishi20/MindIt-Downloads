@@ -1,6 +1,6 @@
 # From build 132 on, built apps, archives and PDFs are published as GitHub Releases (see RELEASING.md), not committed.
-# Note: .gitignore only affects files that aren't tracked yet. The build-131 files already in Windows/, Android/, Mac/,
-# Web/, Guides/ and Reports/ stay tracked until the owner approves removing them from future commits.
+# The build-131 files that used to be tracked in Windows/, Android/, Mac/, Web/, Guides/ and Reports/ were taken out of the
+# current files in build 134 (owner approved); they're still in git history and in the releases.
 *.exe
 *.apk
 *.aab

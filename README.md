@@ -35,6 +35,6 @@ Every release lists the **SHA-256 fingerprint** of each file (and has a `SHA256S
 
 **[All releases](https://github.com/Coolrishi20/MindIt-Downloads/releases)** — every published build with its own files, notes and fingerprints. Builds 125–131 are there too (their original files, checked against the build reports). The newest build is always marked **Latest**.
 
-The app and PDF files in this repository (`Windows/`, `Android/`, `Mac/`, `Web/`, `Guides/`, `Reports/`) are build 131, the last build stored in the repository itself. From build 132 on, apps and PDFs are published only as releases; the text reports here stay up to date: [changelog](Reports/MIND_IT_CHANGELOG.md) · [rollback guide](Reports/MIND_IT_ROLLBACK_GUIDE.md). How a release is made: [RELEASING.md](RELEASING.md).
+Apps and PDFs are published only as releases. This repository holds the download page, the text reports — [changelog](Reports/MIND_IT_CHANGELOG.md) · [rollback guide](Reports/MIND_IT_ROLLBACK_GUIDE.md) — and the release tools ([RELEASING.md](RELEASING.md)). Up to build 131 the app and PDF files were also kept in the repository (`Windows/`, `Android/`, `Mac/`, `Web/`, `Guides/`, `Reports/`); they were taken out of the current files in build 134 and are still in the repository's history and in the build-131 release.
 
 The source code lives in the separate private repository `MindIt-`. It is never copied here.
