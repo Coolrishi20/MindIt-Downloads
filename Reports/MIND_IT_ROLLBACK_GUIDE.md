@@ -102,6 +102,10 @@ Build 129 adds device names to the same file. Build 128 ignores the names (the d
 
 Build 130 keeps two more small files next to your data: `audience-displays.json` (names and margins of your Wi-Fi TV screens) and, on the laptop, `transfer-incoming.json` / `transfer-last.json` (the last quiz taken over from the tablet); the tablet keeps `xfer-state.json` / `xfer-final.json`. Older builds ignore them. A quiz that moved from the tablet to the laptop is in the laptop's saved game and Safety Backups; going back to build 129 on the laptop keeps it (open it with Resume). On the tablet, a quiz that moved away is not offered as a game to resume — it's in its Safety Backups. Going back to an older APK still needs an uninstall (lower versionCode), which deletes the tablet's data — back up first.
 
+## The intro voice (build 131)
+
+Build 131 changes only the intro's voice; it stores nothing new. Going back to build 130 brings back the old voice and keeps all your data. Builds 130 and 131 can still hand a tablet quiz over to each other (*Take Over Tablet Quiz*), because the hand-over code is the same.
+
 ## Source code
 
 - Build 119: tag `checkpoint-build119` (commit `2eefd72`); build 120: tag `checkpoint-build120` (`da1753e`); build 121: tag `checkpoint-build121` (`c926b63`); build 122: tag `checkpoint-build122` (`e02d349`); build 123: tag `checkpoint-build123` (`9b2c15b`); build 124: tag `checkpoint-build124` (`ed2cc27`); build 125: tag `checkpoint-build125`.
