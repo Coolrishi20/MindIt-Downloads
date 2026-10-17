@@ -106,6 +106,14 @@ Build 130 keeps two more small files next to your data: `audience-displays.json`
 
 Build 131 changes only the intro's voice; it stores nothing new. Going back to build 130 brings back the old voice and keeps all your data. Builds 130 and 131 can still hand a tablet quiz over to each other (*Take Over Tablet Quiz*), because the hand-over code is the same.
 
+## Build 132 — TV sound, report, hand-back
+
+Build 132 keeps one more small file on the laptop, `handback-state.json` (and `handback-last.json` / `handback-final.json` for the last quiz handed to the tablet); on the tablet, `transfer-incoming.json` (a quiz coming back from the laptop) and `xfer-last.json` (the record of an earlier move, kept as history). Older builds ignore them. Rehearsal Report files are ordinary files in your Downloads (or wherever you saved them); delete them whenever you like.
+
+- **Going back to build 131 on the laptop:** your data is unchanged. A quiz that was handed to the tablet is in the laptop's Safety Backups and the tablet's saved game. You lose TV sound, the short TV address, the report and the hand-back.
+- **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
+- **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
+
 ## Source code
 
 - Build 119: tag `checkpoint-build119` (commit `2eefd72`); build 120: tag `checkpoint-build120` (`da1753e`); build 121: tag `checkpoint-build121` (`c926b63`); build 122: tag `checkpoint-build122` (`e02d349`); build 123: tag `checkpoint-build123` (`9b2c15b`); build 124: tag `checkpoint-build124` (`ed2cc27`); build 125: tag `checkpoint-build125`.

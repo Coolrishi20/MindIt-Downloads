@@ -1,0 +1,14 @@
+Mind It! for Mac (v1.69, build 131) - Apple Silicon Macs (M1, M2, M3, M4), macOS 11 or newer
+
+1. Check: Apple menu > About This Mac should say "Chip: Apple M..." (Intel Macs are not supported).
+2. Download "Mind It! for Mac (Apple Silicon).zip" from this folder (one file, about 100 MB).
+3. Double-click the zip in your Downloads folder. It unzips to "Mind It!.app".
+4. Drag "Mind It!.app" into Applications (replace the old one if you have an older build; your data stays).
+5. First open: macOS says it can't check the app. Click Done, then
+   Apple menu > System Settings > Privacy & Security > "Mind It! was blocked..." > Open Anyway.
+   (macOS 14 or older: Control-click the app > Open > Open.)
+6. Allow "find devices on your local network" and incoming connections, so the tablet and phones can connect.
+
+Your data stays on the Mac. To bring players, history and the Question Database from the Windows laptop,
+make a backup file there (Backups & Restore > Back Up Now) and restore it on the Mac.
+Not yet tried on a real Mac - test it at home before a quiz night. Full details: Complete Idiot's Guide, section 4.1b.

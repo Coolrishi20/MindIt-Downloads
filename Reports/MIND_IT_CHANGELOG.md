@@ -2,7 +2,20 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 131 (12–17 October 2026)
+## Release notes — builds 116 → 132 (12–17 October 2026)
+
+### Build 132 — sound on a Wi-Fi TV, a clearer intro line, the Rehearsal Report, the quiz back to the tablet (17 October)
+- **🔊 Sound on a Wi-Fi TV:** in 📡 Connect Audience Screen, **🔊 Sound On This TV** sends the quiz's sound to that TV's own speakers. Press **OK** on the TV remote once (TV browsers need a button press before they play sound). The laptop or tablet then goes quiet, so there's no echo, and question videos play with sound on that TV. If the TV drops off, the sound comes back to the laptop within about a second. One TV at a time. 🟡 Not yet heard on a real TV.
+- **The intro's first line is easier to hear:** the music dips slightly (5 dB) under the first line, then comes back for "MIND IT!" and the explosion. Nothing else in the intro changed. The same applies to the 🎵 sting.
+- **📋 Rehearsal Report** (📲 Connect ▾, or 🧪 Test Hosting): a file to send after a rehearsal. It covers this device, the app file's fingerprint, Test Hosting, each TV, the remotes, the team phones, sound and errors. It never contains codes, PINs or keys.
+- **Shorter TV address from the laptop:** type just `192.168.1.20/tv` — no `http://`, no `:8765`. The longer form still works and is shown underneath.
+- **🔒 Lock is a small icon** on the remote, so the top bar takes less room (on an iPhone the quiz name no longer wraps).
+- **📲 Hand Quiz to the Galaxy Tab:** the laptop offers a running quiz to a Galaxy Tab that's connected as a remote. The tablet accepts, and takes everything over the same safe way as *Take Over Tablet Quiz*, the other way round; the laptop becomes the Quizmaster remote. 🟡 Not yet tried with a real Galaxy Tab.
+- **Fixed:**
+  - A Galaxy Tab whose quiz had moved to the laptop could never host again (builds 130–131): every later quiz page on it turned into the laptop's remote, and its phones were sent to the laptop. Now it hosts again when you start a quiz there (or the next day), and when the quiz comes back.
+  - While the Galaxy Tab hosted, a trusted remote that wasn't connected made the tablet cut off the next remote and its own remote link, again and again (builds 130–131).
+  - The optional theme music now also plays on the TV when the TV has the sound.
+- **Both devices need build 132 to move a quiz** between them (the laptop and the Galaxy Tab say so politely otherwise).
 
 ### Build 131 — the intro's new voice (17 October)
 - **New intro voice:** your new recording (*Dark Villain, Cinematic*) replaces the old voice in the intro, the 🎵 Mind It! sting, the sound-test buttons and the winner screen, in the Windows, Mac and Android apps, the webpage and the web link. The music, the loading screen, the explosion and the ending are exactly as before (checked sample for sample).

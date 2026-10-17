@@ -1,0 +1,189 @@
+{
+ "note": "Earlier builds kept in this repository's history. Each file's SHA-256 matches the fingerprint recorded in the build report (CURRENT_STATUS / QC report) when it was published. Used once by the release workflow to publish them as earlier releases.",
+ "builds": [
+  {
+   "build": 125,
+   "date": "13 October 2026",
+   "commit": "81bd60252df974a938cc2e561e9c0fb5a4b5e0bc",
+   "files": {
+    "Mind-It-Windows.exe": {
+     "path": "Windows/Mind It!.exe",
+     "size": 68963836,
+     "sha256": "e995b25fb111bd80dd77f02ca535260403d1727d9a5d46ae901ea17b4b59ca34"
+    },
+    "Mind-It-Android-Galaxy-Tab.apk": {
+     "path": "Android/Mind It! for Android (Galaxy Tab).apk",
+     "size": 1582801,
+     "sha256": "e39b61b44e8f0be4469293ccb170b04f9e086bca54796522801480ef35ec6b4f"
+    },
+    "Mind-It-Mac-Apple-Silicon.zip": {
+     "path": "Mac/Mind It! for Mac (Apple Silicon).zip",
+     "size": 100218384,
+     "sha256": "5fcb449600519919f4fef02c2f4ba32318b999de2e2a9159ef60d4d72488690d"
+    }
+   }
+  },
+  {
+   "build": 126,
+   "date": "13 October 2026",
+   "commit": "75aed7f15ced4bc781225404355416ead35496dc",
+   "files": {
+    "Mind-It-Windows.exe": {
+     "path": "Windows/Mind It!.exe",
+     "size": 69008995,
+     "sha256": "6cd8baecb68cc8cb6b83fc1d4d54d3abfafed159b9bdd8029726b3ac1a355332"
+    },
+    "Mind-It-Android-Galaxy-Tab.apk": {
+     "path": "Android/Mind It! for Android (Galaxy Tab).apk",
+     "size": 1627857,
+     "sha256": "c18ac5de3743017a8cc36831ff65cda8be2358dd344bae1007e9d9e44c6d75f2"
+    },
+    "Mind-It-Mac-Apple-Silicon.zip": {
+     "path": "Mac/Mind It! for Mac (Apple Silicon).zip",
+     "size": 100260337,
+     "sha256": "c04447c1fc64ee60e3c8691c5627c26636819b0724d52c8e6adb4b672727a436"
+    },
+    "mindit.html": {
+     "path": "Web/mindit.html",
+     "size": 2621046,
+     "sha256": "b3e16cb9c68e70acff8d1831159ec9748153937e4ad1da9e8178a7d31a4a00b3"
+    }
+   }
+  },
+  {
+   "build": 127,
+   "date": "16 October 2026",
+   "commit": "e4844171377610f4b81afe965df5826b35f11ffb",
+   "files": {
+    "Mind-It-Windows.exe": {
+     "path": "Windows/Mind It!.exe",
+     "size": 69009786,
+     "sha256": "2470d7fac5d298090642053d00f04a582d6a98fa95a28eae348134c07f13697f"
+    },
+    "Mind-It-Android-Galaxy-Tab.apk": {
+     "path": "Android/Mind It! for Android (Galaxy Tab).apk",
+     "size": 1627857,
+     "sha256": "a547d00e3bbd80e9815cae72a93c17cf42e8e9908d13fcef3bca10b311040efc"
+    },
+    "Mind-It-Mac-Apple-Silicon.zip": {
+     "path": "Mac/Mind It! for Mac (Apple Silicon).zip",
+     "size": 100261994,
+     "sha256": "456f2c4e2268021aaa2223b1a34dfb276e17bed8e2464fe189c3d8e2ba4dc274"
+    },
+    "mindit.html": {
+     "path": "Web/mindit.html",
+     "size": 2624261,
+     "sha256": "1ba4aaca5a623cd56ad4930f55ac1791cebd45421921bd01cb8ecf6e18dcef5a"
+    }
+   }
+  },
+  {
+   "build": 128,
+   "date": "16 October 2026",
+   "commit": "05d065c04b4646db1ca63beb5dcee9a9509e0016",
+   "files": {
+    "Mind-It-Windows.exe": {
+     "path": "Windows/Mind It!.exe",
+     "size": 69015668,
+     "sha256": "1f38f139dac1baeede384d58aa13afe8628d0a1555b1212a65fff374c54a8940"
+    },
+    "Mind-It-Android-Galaxy-Tab.apk": {
+     "path": "Android/Mind It! for Android (Galaxy Tab).apk",
+     "size": 1660625,
+     "sha256": "20ed7e1d8f676891f8a545243cce19a332af0cd8ee7ec55f75fe21dcd0b0d21e"
+    },
+    "Mind-It-Mac-Apple-Silicon.zip": {
+     "path": "Mac/Mind It! for Mac (Apple Silicon).zip",
+     "size": 100268686,
+     "sha256": "69f902de39ed72c02a045e43a03a5f0095118edee893e478b330cc6f72c889c9"
+    },
+    "mindit.html": {
+     "path": "Web/mindit.html",
+     "size": 2645614,
+     "sha256": "510fe51dbb236a2c54424618e28c558d9af3066e84c91dde89b6a821f020a157"
+    }
+   }
+  },
+  {
+   "build": 129,
+   "date": "16 October 2026",
+   "commit": "faeedea70a4a56f0c3f995aae430ecfd31900527",
+   "files": {
+    "Mind-It-Windows.exe": {
+     "path": "Windows/Mind It!.exe",
+     "size": 69016865,
+     "sha256": "5d23dc2b3492b6fc1456149a6dbd3348cd75721613e612ca681b17aacbf3ad6f"
+    },
+    "Mind-It-Android-Galaxy-Tab.apk": {
+     "path": "Android/Mind It! for Android (Galaxy Tab).apk",
+     "size": 1668890,
+     "sha256": "6b26e0b354c48199896ae922687fa6d2430193db3f8a58b4837b47b8499022b7"
+    },
+    "Mind-It-Mac-Apple-Silicon.zip": {
+     "path": "Mac/Mind It! for Mac (Apple Silicon).zip",
+     "size": 100269100,
+     "sha256": "1e78e68dd9c6f29036bbc0ffd5bd1bb9b69e77d964200a37ada42bbfa6ab1151"
+    },
+    "mindit.html": {
+     "path": "Web/mindit.html",
+     "size": 2646984,
+     "sha256": "947701b38193bb1fcb1986d92864cab9462eacf2b7e68519d4f43b67e2ca10c6"
+    }
+   }
+  },
+  {
+   "build": 130,
+   "date": "16 October 2026",
+   "commit": "116a573468a8bf0105b1d94d0e9fc823066eeef8",
+   "files": {
+    "Mind-It-Windows.exe": {
+     "path": "Windows/Mind It!.exe",
+     "size": 69038907,
+     "sha256": "03cbf028753c207eeb8cac5342eee13186d32bccf324ddbe6842a96fc342a8f5"
+    },
+    "Mind-It-Android-Galaxy-Tab.apk": {
+     "path": "Android/Mind It! for Android (Galaxy Tab).apk",
+     "size": 1701658,
+     "sha256": "729633a4746dc7f198646c3ed8439069591bafbeb6022b3efea467e2a708960d"
+    },
+    "Mind-It-Mac-Apple-Silicon.zip": {
+     "path": "Mac/Mind It! for Mac (Apple Silicon).zip",
+     "size": 100301418,
+     "sha256": "c053a8e034759edf060f2b7b79023275dfe5c887d0f108162f821ead3a94c1ed"
+    },
+    "mindit.html": {
+     "path": "Web/mindit.html",
+     "size": 2720982,
+     "sha256": "0159f9aade1aeb283986fba54a850d6f6a9960ee0c8b86651170a6875ef64bed"
+    }
+   }
+  },
+  {
+   "build": 131,
+   "date": "17 October 2026",
+   "commit": "f00ccb1f29d5e2584433b6664b43f511cb7c49bd",
+   "files": {
+    "Mind-It-Windows.exe": {
+     "path": "Windows/Mind It!.exe",
+     "size": 69063574,
+     "sha256": "b4719d0b6a1d9d91de683b247b1aa0b7e25c377720f45dfc4ac7bdca704cc6d6"
+    },
+    "Mind-It-Android-Galaxy-Tab.apk": {
+     "path": "Android/Mind It! for Android (Galaxy Tab).apk",
+     "size": 1722138,
+     "sha256": "99e32a902c462ba80c379a4582f71226d695d3fefc2aaa38d25d38d5d935d0f9"
+    },
+    "Mind-It-Mac-Apple-Silicon.zip": {
+     "path": "Mac/Mind It! for Mac (Apple Silicon).zip",
+     "size": 100326041,
+     "sha256": "e66db8ceda7374e05c0047e4330dedf1e7faf3471afb154e97f343ec378d8a41"
+    },
+    "mindit.html": {
+     "path": "Web/mindit.html",
+     "size": 2753079,
+     "sha256": "75208b7fa73f71c30ddc6de2b2964149484b07303d7f1ed469cc078f756ec2be"
+    }
+   }
+  }
+ ]
+}
