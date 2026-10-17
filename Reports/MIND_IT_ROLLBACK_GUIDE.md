@@ -114,6 +114,13 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 134 — Intermission music, build number, wizarding backdrop
+
+Build 134 stores nothing new.
+- **Going back to build 133** keeps all your data: Intermission is silent again, About & Credits shows only the version, and the wizard theme has its candles and crest back.
+- **Moving a quiz:** builds 132, 133 and 134 can move a quiz between the laptop and the Galaxy Tab.
+- **On the tablet:** going back needs an uninstall first (lower versionCode), so make a backup file first.
+
 ## Build 133 — the new intro theme
 
 Build 133 changes only the intro's sound and adds one line to ★ About & Credits; it stores nothing new.

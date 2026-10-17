@@ -2,7 +2,14 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 133 (12–17 October 2026)
+## Release notes — builds 116 → 134 (12–17 October 2026)
+
+### Build 134 — Intermission music, the build number, a mixed-build warning, a castle for the wizards (17 October)
+- **☕ Intermission music:** the theme's background loop plays quietly during the Intermission countdown and fades out when you resume.
+- **★ About & Credits** (and Setup → About) shows the build: *Version 1.69 · Build 134*.
+- **Connected Devices** warns (**⚠ Different Builds**) when a connected remote, such as the Galaxy Tab, runs another build.
+- **Wizard / Magical School theme:** a castle at night on the TV, with owls, a dragon, a phoenix and bats flying past behind the quiz (an original drawing).
+- **Not in this build:** the Comic Book backdrop — your image didn't come through.
 
 ### Build 133 — the new intro theme (17 October)
 - **New intro theme**, the preview you approved (mix 5a): new hard-rock music, a deep cinematic **"MIND IT!"**, a bigger, booming explosion on its own, then a short closing riff.
