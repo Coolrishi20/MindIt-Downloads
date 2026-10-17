@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Put a finished, tested Mind It! build on the temporary `release-staging` branch, ready for the owner to publish
-(Actions → "Publish a Mind It! release" → Run workflow). Run on the build machine from a clone of MindIt-Downloads:
+— since build 133 (owner: "automatic") the push starts the release workflow by itself: a copy of
+.github/workflows/publish-release.yml is staged with the files, because GitHub runs a push-started workflow from the pushed
+branch (the checks and the publishing code always come from main). Run on the build machine from a clone of MindIt-Downloads:
 
   python3 tools/stage_release.py <build> <release notes .md> <file>=<asset name> [<file>=<asset name> …]
 
@@ -59,15 +61,17 @@ def main():
     open(os.path.join(d, "SHA256SUMS.txt"), "w").write("\n".join(sums) + "\n")
     open(os.path.join(d, "BUILD"), "w").write(build + "\n")
     shutil.copyfile(notes, os.path.join(d, "RELEASE_NOTES.md"))
+    wf = os.path.join(work, ".github", "workflows"); os.makedirs(wf)
+    shutil.copyfile(os.path.join(repo, ".github", "workflows", "publish-release.yml"), os.path.join(wf, "publish-release.yml"))   # the trigger
     g = ["git", "-C", work]
-    subprocess.run(g + ["add", "-f", "staging"], check=True)
+    subprocess.run(g + ["add", "-f", "staging", ".github"], check=True)
     msg = "Build %s staged for release (temporary branch — removed by the release workflow after publishing)" % build
     subprocess.run(g + ["-c", "user.name=Claude", "-c", "user.email=noreply@anthropic.com", "commit", "-q", "-m",
                         msg + "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01CyZjp4agWKeQDDj6PzGMVH"], check=True)
     r = subprocess.run(g + ["push", url, "release-staging:release-staging"])   # a normal push of the staging branch only — never forced
     if r.returncode != 0:
         sys.exit("Not staged: a build is probably already waiting on release-staging. Publish it (or delete that branch on GitHub) first.")
-    print("Build %s is waiting on release-staging. Publish it: Actions → Publish a Mind It! release → Run workflow → %s" % (build, build))
+    print("Build %s staged on release-staging — the release workflow starts by itself (Actions tab). If it doesn't: Actions → Publish a Mind It! release → Run workflow → %s" % (build, build))
     shutil.rmtree(work, ignore_errors=True)
 
 

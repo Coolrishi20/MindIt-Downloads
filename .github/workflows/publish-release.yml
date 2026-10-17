@@ -1,10 +1,15 @@
-# Publish a Mind It! build as a GitHub Release — started by the owner with one click:
+# Publish a Mind It! build as a GitHub Release.
+# Since build 133 (owner, 17 Oct 2026: "automatic") it starts by itself when a build is staged on the temporary branch
+# `release-staging` — a copy of this file travels with each staged build, because GitHub runs a push-started workflow from
+# the pushed branch; the checks and the publishing code always come from main. It can still be started by hand:
 #   Actions → "Publish a Mind It! release" → Run workflow → type the build number → Run workflow.
-# The build's files arrive on the temporary branch `release-staging` (see RELEASING.md). Nothing is published unless
-# every check passes; existing releases and tags are never changed; the previous release stays the latest on any failure.
+# Nothing is published unless every check passes; existing releases and tags are never changed; the previous release stays
+# the latest on any failure (see RELEASING.md).
 name: Publish a Mind It! release
 
 on:
+  push:
+    branches: [release-staging]      # a staged build publishes itself
   workflow_dispatch:
     inputs:
       build:
@@ -28,16 +33,13 @@ concurrency:
 
 jobs:
   publish:
+    if: ${{ github.event_name == 'workflow_dispatch' || !github.event.deleted }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
       GH_TOKEN: ${{ github.token }}
-      BUILD: ${{ inputs.build }}
+      REQ_BUILD: ${{ inputs.build }}     # empty when a push started the run
     steps:
-      - name: Check the build number
-        run: |
-          [[ "$BUILD" =~ ^[0-9]{2,5}$ ]] || { echo "::error::The build number must be digits only, e.g. 132"; exit 1; }
-
       - uses: actions/checkout@v4
         with:
           ref: main
@@ -45,15 +47,23 @@ jobs:
 
       - name: Get the staged build
         run: |
-          git fetch origin release-staging || { echo "::error::Nothing is waiting: the release-staging branch does not exist"; exit 1; }
+          if [ "${{ github.event_name }}" = "push" ]; then REF="${{ github.sha }}"; else REF=release-staging; fi   # a push: exactly the commit that was pushed
+          git fetch origin "$REF" || { echo "::error::Nothing is waiting: the release-staging branch does not exist"; exit 1; }
           git worktree add "$RUNNER_TEMP/staging" FETCH_HEAD
           ls -la "$RUNNER_TEMP/staging/staging"
+          BUILD="${REQ_BUILD:-$(tr -d '[:space:]' < "$RUNNER_TEMP/staging/staging/BUILD")}"   # started by a push: the staged BUILD file says which build
+          echo "BUILD=$BUILD" >> "$GITHUB_ENV"
+
+      - name: Check the build number
+        run: |
+          [[ "$BUILD" =~ ^[0-9]{2,5}$ ]] || { echo "::error::The build number must be digits only, e.g. 132"; exit 1; }
+          echo "Publishing build $BUILD (started by: ${{ github.event_name }})"
 
       - name: Validate the files (nothing is published if this fails)
         run: python3 .github/scripts/mindit_release.py validate "$RUNNER_TEMP/staging/staging" "$BUILD"
 
       - name: Publish the earlier builds (first run only)
-        if: ${{ inputs.include_history }}
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.include_history }}
         run: python3 .github/scripts/mindit_release.py history
 
       - name: Publish this build as the latest release
@@ -74,5 +84,5 @@ jobs:
           fi
 
       - name: Remove the temporary staging branch
-        if: ${{ inputs.remove_staging }}
+        if: ${{ github.event_name == 'push' || inputs.remove_staging }}
         run: git push origin --delete release-staging
