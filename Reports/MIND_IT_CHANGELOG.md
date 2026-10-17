@@ -2,7 +2,16 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 132 (12–17 October 2026)
+## Release notes — builds 116 → 133 (12–17 October 2026)
+
+### Build 133 — the new intro theme (17 October)
+- **New intro theme**, the preview you approved (mix 5a): new hard-rock music, a deep cinematic **"MIND IT!"**, a bigger, booming explosion on its own, then a short closing riff.
+  - It plays in the intro, the 🎵 Mind It! sting and on the winner screen, in the Windows, Mac and Android apps, the webpage and the web link.
+  - The loading screen loops the new riff seamlessly.
+  - The intro page stays until the closing riff has finished: about 8.7 s, instead of 6.8 s.
+- **★ About & Credits** says *Music and announcer voice created in collaboration with ElevenLabs*.
+- **Build 132's dip under the old first line is off:** the new mix lowers the music under "MIND IT!" by itself.
+- A 132 laptop and a 133 Galaxy Tab (or the other way round) can still move a quiz between them.
 
 ### Build 132 — sound on a Wi-Fi TV, a clearer intro line, the Rehearsal Report, the quiz back to the tablet (17 October)
 - **🔊 Sound on a Wi-Fi TV:** in 📡 Connect Audience Screen, **🔊 Sound On This TV** sends the quiz's sound to that TV's own speakers. Press **OK** on the TV remote once (TV browsers need a button press before they play sound). The laptop or tablet then goes quiet, so there's no echo, and question videos play with sound on that TV. If the TV drops off, the sound comes back to the laptop within about a second. One TV at a time. 🟡 Not yet heard on a real TV.

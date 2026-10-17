@@ -114,6 +114,13 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 133 — the new intro theme
+
+Build 133 changes only the intro's sound and adds one line to ★ About & Credits; it stores nothing new.
+- **Going back to build 132** brings back the old intro and keeps all your data.
+- **Moving a quiz:** builds 132 and 133 can still move a quiz between the laptop and the Galaxy Tab (same laptop and tablet server code).
+- **On the tablet:** going back to 132 needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22).
+
 ## Source code
 
 - Build 119: tag `checkpoint-build119` (commit `2eefd72`); build 120: tag `checkpoint-build120` (`da1753e`); build 121: tag `checkpoint-build121` (`c926b63`); build 122: tag `checkpoint-build122` (`e02d349`); build 123: tag `checkpoint-build123` (`9b2c15b`); build 124: tag `checkpoint-build124` (`ed2cc27`); build 125: tag `checkpoint-build125`.
