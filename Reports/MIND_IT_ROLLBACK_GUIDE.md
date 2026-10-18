@@ -114,6 +114,13 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 135 — the tablet app fixed, storage fix, drawn backdrops
+
+- **Galaxy Tab:** don't go back to builds 129–134 — those APKs close at once on the tablet. Older than 129 needs an uninstall (lower versionCode): make a backup file first.
+- **Laptop:** going back to 134 works: the player file is the same format. With a large database, 135 keeps no quick copy in browser storage, so 134 shows no players for about 1.5 s after opening until it has read the file. **Save a backup file first** (Backups & Restore → Back Up Now) and don't change anything in those first seconds.
+- **Webpage on an iPhone/iPad with a large database:** build 135 keeps it in the browser's own database (IndexedDB), which 134 can't read. **Before going back, save a backup file** (Backups & Restore → Back Up Now) and restore it in 134. Small databases stay in localStorage and need nothing.
+- **Moving a quiz:** builds 132–135 can move a quiz between the laptop and the Galaxy Tab.
+
 ## Build 134 — Intermission music, build number, wizarding backdrop
 
 Build 134 stores nothing new.

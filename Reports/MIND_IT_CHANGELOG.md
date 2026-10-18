@@ -2,7 +2,13 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 134 (12–17 October 2026)
+## Release notes — builds 116 → 135 (12–18 October 2026)
+
+### Build 135 — the tablet app fixed, no more false "Storage Full", drawn backdrops (18 October)
+- **The Galaxy Tab app is fixed:** builds 129–134 installed as "application" and closed at once (a packaging fault). Build 135 fixes it: it is called **Mind It!** and installs over it keeping your data (not yet opened on a real tablet — please check). Every APK is now checked the way the tablet reads it.
+- **No more false "Storage Full" with an iPhone:** the iPhone/iPad remote no longer copies the laptop's whole player database; the webpage keeps a large database in the browser's own database; the laptop's file is read before anything is saved; messages say what really happened, and nothing is lost when a save fails (Try Again · Save Backup File).
+- **Drawn TV backdrops** for Christmas, Halloween, Ramadan / Eid, Diwali, Summer, Comic Book, Gaming and Movies (original drawings).
+- **The remote warns about mixed builds** too.
 
 ### Build 134 — Intermission music, the build number, a mixed-build warning, a castle for the wizards (17 October)
 - **☕ Intermission music:** the theme's background loop plays quietly during the Intermission countdown and fades out when you resume.
