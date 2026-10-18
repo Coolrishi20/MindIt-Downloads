@@ -114,6 +114,12 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 137 — Online Mode for Teams calls, part 2
+
+- **Going back to 136:** Online Mode works as in 136 (no answer boxes, no Copy picture, the Speed Bonus window stays at whatever it was set to — 15 if 137 set it; change it in Settings).
+- **Answers typed from the chat** stay in the game records made in 137 (Historic Games). A game saved in 137 and resumed in 136 doesn't show them at the reveal.
+- **Galaxy Tab:** going back to 136 needs an uninstall (lower versionCode) — make a backup file first. Never 129–134.
+
 ## Build 136 — Online Mode, lighter backups, Make Photos Smaller
 
 - **Online Mode:** going back to 135 shows Family Night again; the switches you had stay as they were (135 ignores the Online Mode setting).

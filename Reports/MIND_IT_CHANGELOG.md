@@ -2,7 +2,15 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 136 (12–18 October 2026)
+## Release notes — builds 116 → 137 (12–18 October 2026)
+
+### Build 137 — Online Mode for Teams calls, part 2 (18 October)
+- **Picking Online Mode switches on Teams Presentation Mode** (the Audience View and its Presentation Check).
+- **Final Round answers by private chat:** the TV asks for them, you type each team's answer into Mark Each Team, and the reveal shows it.
+- **Wagers from the chat:** All in · Half · 0, none of the phone-only boxes, the cursor in the first amount box (fixes the webpage version of build 136).
+- **How to Play on the TV explains a call** (fixes build 136's Final Round card, which still said "answers on their phone").
+- **📋 Copy picture for the chat** at the end; **Speed Bonus window 15 seconds** in Online Mode.
+- **Releases:** the tablet app is opened on an Android emulator before a release is published.
 
 ### Build 136 — Online Mode, lighter backups, Make Photos Smaller, where your data is (18 October)
 - **🌐 Online Mode replaces Family Night**, for quizzes on a Teams call: Speed Bonus on, no Phoenix Chip, 2 rounds + Final, and wagers sent to the Quizmaster in a private chat message instead of a QR code on the TV.
