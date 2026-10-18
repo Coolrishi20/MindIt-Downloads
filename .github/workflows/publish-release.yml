@@ -83,6 +83,9 @@ jobs:
             git push origin HEAD:main
           fi
 
+      - name: Warnings on earlier releases (releases/notices.json; notes only)
+        run: python3 .github/scripts/mindit_release.py notices || echo "::warning::The warnings on earlier releases weren't all added — the new release is published and checked; this step runs again with the next release."
+
       - name: Remove the temporary staging branch
         if: ${{ github.event_name == 'push' || inputs.remove_staging }}
         run: git push origin --delete release-staging

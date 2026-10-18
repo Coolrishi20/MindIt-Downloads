@@ -8,6 +8,8 @@ Subcommands (run in this order by .github/workflows/publish-release.yml):
   verify   <build>                 download every file of the new release and compare fingerprints; if anything is wrong,
                                    the release goes back to draft and the previous release is the latest again
   readme   <build>                 rewrite the download section of README.md for the new latest release
+  notices                          put the warnings listed in releases/notices.json at the top of those earlier releases'
+                                   notes (build 136; owner: "Do … 5"). Only the notes change — never a file, tag or date.
 
 Rules: never overwrite or delete an existing release or tag; never mark a draft, prerelease or older build as the latest;
 a failure before publishing leaves the previous release as the latest.
@@ -386,10 +388,40 @@ def cmd_readme(build):
     print("README download section → build %s" % build)
 
 
+# ---------------------------------------------------------------- notices
+def cmd_notices():
+    """releases/notices.json: {"notices": [{"builds": [129, …], "text": "…"}]}. Each listed release whose notes don't
+    start with that text gets it added at the top. Files, tags, dates and the latest release are never touched; a
+    release that already carries the text is skipped, so this can run on every publish."""
+    p = "releases/notices.json"
+    if not os.path.exists(p):
+        print("no notices"); return
+    spec = json.load(open(p, encoding="utf-8"))
+    by_tag = {r.get("tag_name"): r for r in all_releases()}
+    done = 0
+    for n in spec.get("notices", []):
+        text = n["text"].strip()
+        for b in n["builds"]:
+            r = by_tag.get(tag_for(b))
+            if not r:
+                print("--  %s: no such release" % tag_for(b)); continue
+            body = r.get("body") or ""
+            if body.startswith(text):
+                print("ok  %s already carries the notice" % r["tag_name"]); continue
+            new = text + "\n\n" + body
+            api("repos/%s/releases/%d" % (REPO, r["id"]), "-X", "PATCH", "-f", "body=" + new)
+            chk = api("repos/%s/releases/%d" % (REPO, r["id"]))
+            if not (chk.get("body") or "").startswith(text) or len(chk.get("assets") or []) != len(r.get("assets") or []):
+                fail("%s: the notice didn't stick" % r["tag_name"])
+            print("ok  %s: notice added (files unchanged: %d)" % (r["tag_name"], len(chk.get("assets") or []))); done += 1
+    print("notices added: %d" % done)
+
+
 if __name__ == "__main__":
     c = sys.argv[1] if len(sys.argv) > 1 else ""
     {"validate": lambda: cmd_validate(sys.argv[2], sys.argv[3]),
      "history": cmd_history,
      "publish": lambda: cmd_publish(sys.argv[2], sys.argv[3]),
      "verify": lambda: cmd_verify(sys.argv[2]),
-     "readme": lambda: cmd_readme(sys.argv[2])}.get(c, lambda: fail("usage: see the top of this file"))()
+     "readme": lambda: cmd_readme(sys.argv[2]),
+     "notices": cmd_notices}.get(c, lambda: fail("usage: see the top of this file"))()

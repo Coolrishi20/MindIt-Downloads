@@ -44,10 +44,13 @@ published and you see a red ✗ in the **Actions** tab. You can still start it b
      draft and the previous release is the latest again.
    - rewrites the README's download section and deletes `release-staging` (always after an automatic run; by hand, if you left
      that box ticked).
+   - (since build 136) puts the warnings listed in `releases/notices.json` at the top of those earlier releases' notes — today:
+     "don't install the Galaxy Tab app of builds 129–134". Only the notes change; a release that already carries a warning is
+     skipped. If this step fails, the new release still stands and the step runs again with the next one.
 
 ## Rules the workflow keeps
 
-- An existing release or tag is never changed, replaced or deleted. Running it twice for the same build stops with "already exists".
+- An existing release's files, tag and date are never changed, replaced or deleted (only a warning from `releases/notices.json` can be added to its notes). Running it twice for the same build stops with "already exists".
 - Drafts and prereleases are never the latest; an older build is never made the latest.
 - A platform with no new file in a build keeps the previous release's file, labelled with its own build number.
 - Nothing is deleted except the temporary `release-staging` branch, and only after a verified publish.

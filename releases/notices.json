@@ -1,0 +1,16 @@
+{
+ "_about": "Warnings shown at the top of earlier releases' notes. The release workflow adds each one once (mindit_release.py notices); files and tags are never changed.",
+ "notices": [
+  {
+   "builds": [
+    129,
+    130,
+    131,
+    132,
+    133,
+    134
+   ],
+   "text": "> ⚠️ **Don't install this release's Galaxy Tab app (APK).** It installs under the name \"application\" and closes at once — a packaging fault in builds 129–134. Use **[build 135 or newer](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest)**: it installs over it with **Update** and keeps the tablet's data. The other files in this release are not affected."
+  }
+ ]
+}
