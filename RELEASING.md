@@ -36,6 +36,12 @@ published and you see a red ✗ in the **Actions** tab. You can still start it b
      screen must exist in the app's code and every text value must line up (builds 129–134 failed this on the device); the Mac zip is intact and
      contains `Mind It!.app`; the page is Mind It! 1.69; the tag doesn't exist yet; the build is newer than the latest release.
      **If anything fails, nothing is published.**
+   - (since build 137) **opens the tablet app on an Android 15 emulator**, the way a person does: installs the APK, taps its
+     icon, and checks 20 seconds later that the app is open, still running and hasn't crashed (`.github/scripts/apk_launch_test.sh`).
+     Builds 129–134 passed every file check and still closed at once on the tablet; this test catches that — tried on the
+     published APKs: build 134 fails ("Didn't find class com.mindit.app.activity"), build 136 opens. **If the app doesn't install
+     or doesn't stay open, nothing is published.** If the emulator itself doesn't start, the run shows a warning and the other
+     checks decide. When the app opens, the release notes get a line saying so. A build with no new APK skips this step.
    - (started by hand with the box ticked) publishes the earlier builds 125–131 from this repository's history, oldest first, never as "latest";
      each file is checked against the fingerprint recorded when it was built (`releases/history.json`).
    - creates the release **as a draft**, checks every upload, then publishes it as **Latest** — tag `v1.69-build<N>`,
@@ -47,6 +53,13 @@ published and you see a red ✗ in the **Actions** tab. You can still start it b
    - (since build 136) puts the warnings listed in `releases/notices.json` at the top of those earlier releases' notes — today:
      "don't install the Galaxy Tab app of builds 129–134". Only the notes change; a release that already carries a warning is
      skipped. If this step fails, the new release still stands and the step runs again with the next one.
+
+## Trying a published APK on the emulator
+
+**Actions** tab → **Test the tablet app on an Android emulator** → **Run workflow** → type the release tags (e.g.
+`v1.69-build136 v1.69-build137`) → **Run workflow**. Each APK is installed and opened the same way; the run is red if one
+doesn't open, and the screenshots are kept with the run. (The build machine can also start it by pushing a branch named
+`apk-launch-test` with a file `TAGS` listing the tags.)
 
 ## Rules the workflow keeps
 
