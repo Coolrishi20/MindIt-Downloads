@@ -1,6 +1,6 @@
 # Open published Galaxy Tab APKs on an Android emulator (since build 137): install, tap the icon, check the app is open and
-# running 20 seconds later with no crash. Started by pushing the temporary branch `apk-launch-test` (its file TAGS lists the
-# releases to test), or by hand: Actions → "Test the tablet app on an Android emulator" → Run workflow.
+# running 20 seconds later with no crash. Started by hand: Actions → "Test the tablet app on an Android emulator" → Run workflow
+# → type the release tags; or by pushing a branch named `apk-launch-test` whose file TAGS lists them.
 # The release workflow runs the same check on every new APK before it publishes (see publish-release.yml).
 name: Test the tablet app on an Android emulator
 
@@ -53,14 +53,15 @@ jobs:
           disable-animations: true
           script: bash .github/scripts/apk_launch_many.sh "$RUNNER_TEMP/apks" "$RUNNER_TEMP/results"
 
-      - name: Results
+      - name: Results (a release whose app doesn't open makes this run red)
         if: always()
         run: |
-          found=0
-          for f in "$RUNNER_TEMP"/results/*.txt; do [ -f "$f" ] || continue; found=1; t=$(basename "$f" .txt); r=$(cat "$f")
-            case "$r" in ok*) echo "::notice title=$t opens on Android 15::$r";; *) echo "::error title=$t does not open on Android 15::$r";; esac
+          found=0; bad=0
+          for f in "$RUNNER_TEMP"/results/*.txt; do [ -f "$f" ] || continue; found=1
+            bash .github/scripts/apk_launch_result.sh "$f" "$(basename "$f" .txt)" block || bad=1
           done
           [ "$found" = 1 ] || echo "::warning title=No results::The emulator didn't run the test."
+          exit $bad
 
       - name: Keep the screenshots
         if: always()

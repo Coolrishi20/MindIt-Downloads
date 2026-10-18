@@ -3,8 +3,8 @@
 # `release-staging` — a copy of this file travels with each staged build, because GitHub runs a push-started workflow from
 # the pushed branch; the checks and the publishing code always come from main. It can still be started by hand:
 #   Actions → "Publish a Mind It! release" → Run workflow → type the build number → Run workflow.
-# Nothing is published unless every check passes; existing releases and tags are never changed; the previous release stays
-# the latest on any failure (see RELEASING.md).
+# Nothing is published unless every check passes (since build 137 that includes opening the tablet app on an Android
+# emulator); existing releases and tags are never changed; the previous release stays the latest on any failure (see RELEASING.md).
 name: Publish a Mind It! release
 
 on:
@@ -61,6 +61,40 @@ jobs:
 
       - name: Validate the files (nothing is published if this fails)
         run: python3 .github/scripts/mindit_release.py validate "$RUNNER_TEMP/staging/staging" "$BUILD"
+
+      # Since build 137 (owner: "do them all"): the APK is also opened on an Android emulator, the way a person taps the icon.
+      # Builds 129–134 passed every file check and still closed at once on the tablet. A fault in the emulator itself never
+      # blocks a release (warning); an app that doesn't install or doesn't stay open does (nothing is published).
+      - name: Is there a new tablet app in this build?
+        id: apk
+        run: |
+          if [ -f "$RUNNER_TEMP/staging/staging/Mind-It-Android-Galaxy-Tab.apk" ]; then echo "new=1" >> "$GITHUB_OUTPUT"; echo "Yes — it is opened on an Android emulator next."
+          else echo "No new APK in this build (the previous release's is carried over) — the launch test is skipped."; fi
+
+      - name: Enable the emulator's hardware acceleration (KVM)
+        if: steps.apk.outputs.new == '1'
+        continue-on-error: true
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Open the tablet app on an Android 15 emulator
+        if: steps.apk.outputs.new == '1'
+        continue-on-error: true        # the next step decides
+        timeout-minutes: 25
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: bash .github/scripts/apk_launch_test.sh "$RUNNER_TEMP/staging/staging/Mind-It-Android-Galaxy-Tab.apk" "$RUNNER_TEMP/launch.txt" "$RUNNER_TEMP/launch.png"
+
+      - name: The tablet app must open (nothing is published if it doesn't)
+        if: steps.apk.outputs.new == '1'
+        run: bash .github/scripts/apk_launch_result.sh "$RUNNER_TEMP/launch.txt" "Build $BUILD's tablet app" block "$RUNNER_TEMP/staging/staging/RELEASE_NOTES.md"
 
       - name: Publish the earlier builds (first run only)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.include_history }}
