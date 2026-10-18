@@ -1,0 +1,125 @@
+# Publish a Mind It! build as a GitHub Release.
+# Since build 133 (owner, 17 Oct 2026: "automatic") it starts by itself when a build is staged on the temporary branch
+# `release-staging` — a copy of this file travels with each staged build, because GitHub runs a push-started workflow from
+# the pushed branch; the checks and the publishing code always come from main. It can still be started by hand:
+#   Actions → "Publish a Mind It! release" → Run workflow → type the build number → Run workflow.
+# Nothing is published unless every check passes (since build 137 that includes opening the tablet app on an Android
+# emulator); existing releases and tags are never changed; the previous release stays the latest on any failure (see RELEASING.md).
+name: Publish a Mind It! release
+
+on:
+  push:
+    branches: [release-staging]      # a staged build publishes itself
+  workflow_dispatch:
+    inputs:
+      build:
+        description: "Build number to publish (it must be waiting on the release-staging branch), e.g. 132"
+        required: true
+      include_history:
+        description: "Also publish the earlier verified builds 125–131 from this repository's history (first run only; already published ones are skipped)"
+        type: boolean
+        default: true
+      remove_staging:
+        description: "After a verified publish, delete the temporary release-staging branch (the files are then in the release)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: ${{ github.event_name == 'workflow_dispatch' || !github.event.deleted }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REQ_BUILD: ${{ inputs.build }}     # empty when a push started the run
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Get the staged build
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then REF="${{ github.sha }}"; else REF=release-staging; fi   # a push: exactly the commit that was pushed
+          git fetch origin "$REF" || { echo "::error::Nothing is waiting: the release-staging branch does not exist"; exit 1; }
+          git worktree add "$RUNNER_TEMP/staging" FETCH_HEAD
+          ls -la "$RUNNER_TEMP/staging/staging"
+          BUILD="${REQ_BUILD:-$(tr -d '[:space:]' < "$RUNNER_TEMP/staging/staging/BUILD")}"   # started by a push: the staged BUILD file says which build
+          echo "BUILD=$BUILD" >> "$GITHUB_ENV"
+
+      - name: Check the build number
+        run: |
+          [[ "$BUILD" =~ ^[0-9]{2,5}$ ]] || { echo "::error::The build number must be digits only, e.g. 132"; exit 1; }
+          echo "Publishing build $BUILD (started by: ${{ github.event_name }})"
+
+      - name: Validate the files (nothing is published if this fails)
+        run: python3 .github/scripts/mindit_release.py validate "$RUNNER_TEMP/staging/staging" "$BUILD"
+
+      # Since build 137 (owner: "do them all"): the APK is also opened on an Android emulator, the way a person taps the icon.
+      # Builds 129–134 passed every file check and still closed at once on the tablet. A fault in the emulator itself never
+      # blocks a release (warning); an app that doesn't install or doesn't stay open does (nothing is published).
+      - name: Is there a new tablet app in this build?
+        id: apk
+        run: |
+          if [ -f "$RUNNER_TEMP/staging/staging/Mind-It-Android-Galaxy-Tab.apk" ]; then echo "new=1" >> "$GITHUB_OUTPUT"; echo "Yes — it is opened on an Android emulator next."
+          else echo "No new APK in this build (the previous release's is carried over) — the launch test is skipped."; fi
+
+      - name: Enable the emulator's hardware acceleration (KVM)
+        if: steps.apk.outputs.new == '1'
+        continue-on-error: true
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Open the tablet app on an Android 15 emulator
+        if: steps.apk.outputs.new == '1'
+        continue-on-error: true        # the next step decides
+        timeout-minutes: 25
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: bash .github/scripts/apk_launch_test.sh "$RUNNER_TEMP/staging/staging/Mind-It-Android-Galaxy-Tab.apk" "$RUNNER_TEMP/launch.txt" "$RUNNER_TEMP/launch.png"
+
+      - name: The tablet app must open (nothing is published if it doesn't)
+        if: steps.apk.outputs.new == '1'
+        run: bash .github/scripts/apk_launch_result.sh "$RUNNER_TEMP/launch.txt" "Build $BUILD's tablet app" block "$RUNNER_TEMP/staging/staging/RELEASE_NOTES.md"
+
+      - name: Publish the earlier builds (first run only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.include_history }}
+        run: python3 .github/scripts/mindit_release.py history
+
+      - name: Publish this build as the latest release
+        run: python3 .github/scripts/mindit_release.py publish "$RUNNER_TEMP/staging/staging" "$BUILD"
+
+      - name: Download and check every file of the new release
+        run: python3 .github/scripts/mindit_release.py verify "$BUILD"
+
+      - name: Update the download section of README.md
+        run: |
+          python3 .github/scripts/mindit_release.py readme "$BUILD"
+          if ! git diff --quiet README.md; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add README.md
+            git commit -m "README: latest download is build $BUILD"
+            git push origin HEAD:main
+          fi
+
+      - name: Warnings on earlier releases (releases/notices.json; notes only)
+        run: python3 .github/scripts/mindit_release.py notices || echo "::warning::The warnings on earlier releases weren't all added — the new release is published and checked; this step runs again with the next release."
+
+      - name: Remove the temporary staging branch
+        if: ${{ github.event_name == 'push' || inputs.remove_staging }}
+        run: git push origin --delete release-staging
