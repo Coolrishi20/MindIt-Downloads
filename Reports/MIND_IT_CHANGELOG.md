@@ -2,7 +2,16 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 137 (12–18 October 2026)
+## Release notes — builds 116 → 138 (12–18 October 2026)
+
+### Build 138 — code check: fixes and a lighter glow (18 October)
+- **Six buttons work in the Windows and Mac app:** + New Category, Move To Category, Rename, Delete Category, ⇄ (move to another round) and ✎ Edit Answer open the app's own box.
+- **✎ Edit Answer stays** when team phones are connected.
+- **Accents and emoji survive large saves** in the Windows and Mac app.
+- **📶 Devices shows the tablet as connected.**
+- **Galaxy Tab hosting: Wi-Fi TVs stay connected** (they were dropped every 15 seconds).
+- **Safer with bad data, and a PIN guessing limit**, in the tablet and laptop apps.
+- **Lighter:** the "now playing" glow uses far less computer power; phones, TVs and tablets download the page compressed.
 
 ### Build 137 — Online Mode for Teams calls, part 2 (18 October)
 - **Picking Online Mode switches on Teams Presentation Mode** (the Audience View and its Presentation Check).
