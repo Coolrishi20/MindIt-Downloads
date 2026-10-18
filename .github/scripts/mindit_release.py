@@ -134,7 +134,14 @@ def check_file(path, kind, build):
         certs = run(tool("apksigner"), "verify", "--print-certs", path)
         if APK_CERT_SHA256 not in certs.replace(":", "").lower():
             fail("the APK is not signed with the original Mind It! key — it would not install over the old app")
-        print("APK: %s versionCode %s, versionName %s, original key" % (pkg, code, vname))
+        # build 135: read the manifest the way the device does (aapt prints the raw strings, which hid the build 129–134
+        # fault: on a tablet those APKs were named "application" and closed at once)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import apk_check
+        problems, info = apk_check.check(path, build)
+        if problems:
+            fail("the APK would not work on a device:\n  - " + "\n  - ".join(problems[:12]))
+        print("APK: %s versionCode %s, versionName %s, original key; on a device: named %r, opens %s" % (pkg, code, vname, info.get("label"), info.get("activity")))
     elif kind == "mac":
         r = subprocess.run(["unzip", "-tq", path], capture_output=True, text=True)
         if r.returncode != 0:

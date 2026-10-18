@@ -31,7 +31,9 @@ published and you see a red ✗ in the **Actions** tab. You can still start it b
 
    The workflow, in order:
    - **checks** the staged files: every SHA-256 fingerprint; the EXE is a Windows program; the APK is `com.mindit.app`, versionName 1.69,
-     versionCode = the build number, and signed with the original key (so it updates the installed app); the Mac zip is intact and
+     versionCode = the build number, and signed with the original key (so it updates the installed app); since build 135
+     its manifest is also read the way the tablet reads it (`apk_check.py`): the name must be "Mind It!", the launcher
+     screen must exist in the app's code and every text value must line up (builds 129–134 failed this on the device); the Mac zip is intact and
      contains `Mind It!.app`; the page is Mind It! 1.69; the tag doesn't exist yet; the build is newer than the latest release.
      **If anything fails, nothing is published.**
    - (started by hand with the box ticked) publishes the earlier builds 125–131 from this repository's history, oldest first, never as "latest";
