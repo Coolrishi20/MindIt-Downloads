@@ -2,7 +2,14 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 135 (12–18 October 2026)
+## Release notes — builds 116 → 136 (12–18 October 2026)
+
+### Build 136 — Online Mode, lighter backups, Make Photos Smaller, where your data is (18 October)
+- **🌐 Online Mode replaces Family Night**, for quizzes on a Teams call: Speed Bonus on, no Phoenix Chip, 2 rounds + Final, and wagers sent to the Quizmaster in a private chat message instead of a QR code on the TV.
+- **Backups about a third smaller:** each question picture is in a backup file once. Builds 132 and later restore them.
+- **Backups & Restore → Right now** shows where the player data is saved, how big it is and when it was last saved, and how many pictures there are.
+- **🗜 Make photos smaller** (only when you tap it): older, larger player-photo originals become 800 px after a safety backup; players keep their pictures, question pictures don't change.
+- **Warnings** at the top of the build 129–134 releases: don't install their Galaxy Tab app.
 
 ### Build 135 — the tablet app fixed, no more false "Storage Full", drawn backdrops (18 October)
 - **The Galaxy Tab app is fixed:** builds 129–134 installed as "application" and closed at once (a packaging fault). Build 135 fixes it: it is called **Mind It!** and installs over it keeping your data (not yet opened on a real tablet — please check). Every APK is now checked the way the tablet reads it.

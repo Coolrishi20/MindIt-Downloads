@@ -114,6 +114,13 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 136 — Online Mode, lighter backups, Make Photos Smaller
+
+- **Online Mode:** going back to 135 shows Family Night again; the switches you had stay as they were (135 ignores the Online Mode setting).
+- **Backup files made by 136** restore with every picture in build 119 — the rollback build in `MIND_IT_v1.69_PREVIOUS_WORKING_RELEASE.zip` — and in builds 132–135 (tested). Builds older than 111 can't read them (none of those is in use).
+- **After Make Photos Smaller:** going back keeps the smaller originals (same picture IDs, any build shows them). To get the larger ones back: Backups & Restore → 🛟 Safety backups → **Before Make Photos Smaller** → ↺ Restore.
+- **Galaxy Tab:** going back to 135 needs an uninstall (lower versionCode) — make a backup file first. Never 129–134.
+
 ## Build 135 — the tablet app fixed, storage fix, drawn backdrops
 
 - **Galaxy Tab:** don't go back to builds 129–134 — those APKs close at once on the tablet. Older than 129 needs an uninstall (lower versionCode): make a backup file first.
