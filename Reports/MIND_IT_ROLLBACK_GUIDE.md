@@ -114,6 +114,16 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 140 — Undo pop-up, Go to the Final, One More Question, sudden-death tiebreaker, portrait Final reveal
+
+- **Going back to 139:** the four buttons go away; ties are decided by most correct answers only. Saved data needs no converting. 139 ignores the complete copy (the `game-complete-*.json` files in the data folder, the tablet's files and the browser database `mindit-game` stay, unused; nothing else changes), so a quiz with many pictures is again saved without them — make a backup file. A game saved during a tiebreaker shows an empty screen in 139 — finish the tiebreaker (or cancel it) in 140 first. Games recorded with a tiebreaker keep their positions.
+- **Galaxy Tab:** going back to 139 needs an uninstall (lower versionCode). Make a backup file first. Never 129–134.
+
+## Build 139 — white Now Playing light, 45-second Final, many-team layouts, Wi-Fi reliability
+
+- **Going back to 138:** the gold Now Playing glow, the 60-second default and the layout problems with 7–8 teams come back, and one bad message from a device on the Wi-Fi can stop the laptop app again. Saved data needs no converting; a game saved in 139 keeps its 45-second Final in 138.
+- **Galaxy Tab:** going back to 138 needs an uninstall (lower versionCode). Make a backup file first. Never 129–134.
+
 ## Build 138 — code check: fixes and optimisations
 
 - **Going back to 137:** the six buttons stop working again in the Windows and Mac app, and corrections made with ✎ Edit Answer can be replaced by the phone's answer. Nothing in the saved data needs converting: a correction is saved in the game (`finalAnswersEdited`), and 137 ignores it.

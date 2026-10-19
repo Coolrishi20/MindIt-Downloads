@@ -2,7 +2,22 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 138 (12–18 October 2026)
+## Release notes — builds 116 → 140 (12–19 October 2026)
+
+### Build 140 — four new buttons for the end of a round and the end of the game (19 October)
+- **↩ Undo pop-up** after every score (8 seconds, one tap, no question asked).
+- **⏱ One More Question:** the next question is the last of the round; the TV says so; then the round summary.
+- **⭐ Go to the Final:** end the round, skip the rounds still to come, round summary, then the Final.
+- **⚡ Sudden-death tiebreaker** when teams are level on points for first place (your choice; one Question Database question, out loud).
+- **Final reveal on a portrait TV with 6–8 teams:** rows of four cards with the standings straight under them.
+- **Code audit (same build):** pictures, videos, music and team photos are now kept in a complete copy of the saved game and come back after a crash (a red card warns if there's no room for it); the app can be rebuilt exactly from GitHub; team codes, PIN and keys come from the secure random generator (same formats); a code map and checker guard against conflicting changes.
+
+### Build 139 — a white "now playing" light, a 45-second Final, many-team layouts and steadier Wi-Fi (19 October)
+- **Now Playing is a white spotlight**, so it can't be mistaken for 🔥 On Fire; a team that is both shows both rings.
+- **The Final Round timer is 45 seconds** by default (was 60).
+- **Layouts with 7–8 teams and many players fixed:** the Final reveal, the Returning Champion card, the glow with the scoreboard down the side, "Buzzed In!", the recap and standings pictures, the tablet's Final marking and the laptop's team statuses.
+- **One bad message from a device on the Wi-Fi no longer stops the Windows and Mac app.**
+- **Steadier on weak Wi-Fi:** slow TVs get the newest picture, a stuck device can't hold up the others, big files can't run the Galaxy Tab out of memory, team codes have a guessing limit, and old screens are forgotten.
 
 ### Build 138 — code check: fixes and a lighter glow (18 October)
 - **Six buttons work in the Windows and Mac app:** + New Category, Move To Category, Rename, Delete Category, ⇄ (move to another round) and ✎ Edit Answer open the app's own box.
