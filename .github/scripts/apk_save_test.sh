@@ -24,12 +24,15 @@ for m in re.finditer(r'<node [^>]*>', x):
             x1, y1, x2, y2 = map(int, b.groups()); print((x1 + x2) // 2, (y1 + y2) // 2); break
 PY
 tap_text(){   # tap the on-screen element whose text contains $1 (the page in the WebView is in the accessibility tree)
-  for i in 1 2 3 4 5 6; do
+  for i in $(seq 1 12); do
     adb shell uiautomator dump /sdcard/mindit-ui.xml >/dev/null 2>&1
     adb shell cat /sdcard/mindit-ui.xml > /tmp/mindit-ui.xml 2>/dev/null
+    [ -n "$OUT" ] && cp /tmp/mindit-ui.xml "$OUT.xml" 2>/dev/null   # kept with the results, to see what the screen held
+    # a slow emulator sometimes shows "Process system isn't responding" over everything: answer Wait and look again
+    W=$(python3 /tmp/mindit-find.py "Wait"); if [ -n "$W" ] && grep -q "responding" /tmp/mindit-ui.xml; then adb shell input tap $W; sleep 3; continue; fi
     XY=$(python3 /tmp/mindit-find.py "$1")
     if [ -n "$XY" ]; then adb shell input tap $XY; return 0; fi
-    sleep 3
+    sleep 4
   done
   return 1
 }
@@ -38,7 +41,7 @@ log(){ adb logcat -d 2>/dev/null | grep -o "MINDIT_FS $1[^\"]*" | head -1; }
 crash(){ adb logcat -d -b crash 2>/dev/null | grep -A3 "FATAL EXCEPTION" | grep -m3 -E "Process: $PKG|Exception|Error" | tr '\n' ' ' | cut -c1-300; }
 
 adb shell am force-stop "$PKG" >/dev/null 2>&1; adb logcat -c; adb logcat -b crash -c 2>/dev/null || true
-if ! open_quiz; then echo "skip: couldn't find Start New Game on the app's home screen (the emulator's screen reader view)" > "$OUT"; cat "$OUT"; exit 0; fi
+if ! open_quiz; then [ -n "$SHOT" ] && adb exec-out screencap -p > "$SHOT" 2>/dev/null; echo "skip: couldn't find Start New Game on the app's home screen (the emulator's screen reader view; see the .xml next to this result)" > "$OUT"; cat "$OUT"; exit 0; fi
 for i in $(seq 1 20); do [ -n "$(log saved)$(log failed)" ] && break; sleep 2; done
 PAGE=$(log page); SAVED=$(log saved); FAILED=$(log failed); C1=$(crash)
 if [ -z "$PAGE" ]; then
