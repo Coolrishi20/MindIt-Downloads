@@ -18,7 +18,8 @@ import re, sys
 x = open('/tmp/mindit-ui.xml', encoding='utf-8', errors='replace').read()
 for m in re.finditer(r'<node [^>]*>', x):
     n = m.group(0); t = re.search(r' text="([^"]*)"', n); d = re.search(r' content-desc="([^"]*)"', n)
-    if sys.argv[1] in ((t.group(1) if t else '') + ' ' + (d.group(1) if d else '')):
+    tx = (t.group(1) if t else '') + ' ' + (d.group(1) if d else '')
+    if (tx.strip() == sys.argv[1]) if len(sys.argv) > 2 else (sys.argv[1] in tx):   # "exact": the whole text, not part of it
         b = re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', n)
         if b:
             x1, y1, x2, y2 = map(int, b.groups()); print((x1 + x2) // 2, (y1 + y2) // 2); break
@@ -32,6 +33,8 @@ tap_text(){   # tap the on-screen element whose text contains $1 (the page in th
     W=$(python3 /tmp/mindit-find.py "Wait"); if [ -n "$W" ] && grep -q "responding" /tmp/mindit-ui.xml; then adb shell input tap $W; sleep 3; continue; fi
     # the app runs full screen: Android's one-time "Viewing full screen — Got it" note covers it at first
     G=$(python3 /tmp/mindit-find.py "Got it"); if [ -n "$G" ] && grep -q "full screen" /tmp/mindit-ui.xml; then adb shell input tap $G; sleep 2; continue; fi
+    # Android 13+ may ask "Allow Mind It! to send you notifications?" over the quiz page: answer Allow
+    N=$(python3 /tmp/mindit-find.py "Allow" exact); if [ -n "$N" ] && grep -q "send you notifications" /tmp/mindit-ui.xml; then adb shell input tap $N; sleep 2; continue; fi
     XY=$(python3 /tmp/mindit-find.py "$1")
     if [ -n "$XY" ]; then adb shell input tap $XY; return 0; fi
     sleep 4
@@ -50,6 +53,7 @@ log(){ adb logcat -d 2>/dev/null | grep -o "MINDIT_FS $1[^\"]*" | head -1; }
 crash(){ adb logcat -d -b crash 2>/dev/null | grep -A3 "FATAL EXCEPTION" | grep -m3 -E "Process: $PKG|Exception|Error" | tr '\n' ' ' | cut -c1-300; }
 
 adb shell settings put secure immersive_mode_confirmations confirmed >/dev/null 2>&1 || true   # no "Viewing full screen" note
+adb shell pm grant "$PKG" android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true   # no "Allow notifications?" question (Android 13+)
 adb shell am force-stop "$PKG" >/dev/null 2>&1; adb logcat -c; adb logcat -b crash -c 2>/dev/null || true
 OPENED=""
 if ! open_quiz; then shot; echo "skip: ${OPENED:-could not find Start New Game on the home screen} (the emulator's screen reader view; see the .xml next to this result)" > "$OUT"; cat "$OUT"; exit 0; fi
