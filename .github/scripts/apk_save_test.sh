@@ -30,6 +30,8 @@ tap_text(){   # tap the on-screen element whose text contains $1 (the page in th
     [ -n "$OUT" ] && cp /tmp/mindit-ui.xml "$OUT.xml" 2>/dev/null   # kept with the results, to see what the screen held
     # a slow emulator sometimes shows "Process system isn't responding" over everything: answer Wait and look again
     W=$(python3 /tmp/mindit-find.py "Wait"); if [ -n "$W" ] && grep -q "responding" /tmp/mindit-ui.xml; then adb shell input tap $W; sleep 3; continue; fi
+    # the app runs full screen: Android's one-time "Viewing full screen — Got it" note covers it at first
+    G=$(python3 /tmp/mindit-find.py "Got it"); if [ -n "$G" ] && grep -q "full screen" /tmp/mindit-ui.xml; then adb shell input tap $G; sleep 2; continue; fi
     XY=$(python3 /tmp/mindit-find.py "$1")
     if [ -n "$XY" ]; then adb shell input tap $XY; return 0; fi
     sleep 4
@@ -40,6 +42,7 @@ open_quiz(){ adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/
 log(){ adb logcat -d 2>/dev/null | grep -o "MINDIT_FS $1[^\"]*" | head -1; }
 crash(){ adb logcat -d -b crash 2>/dev/null | grep -A3 "FATAL EXCEPTION" | grep -m3 -E "Process: $PKG|Exception|Error" | tr '\n' ' ' | cut -c1-300; }
 
+adb shell settings put secure immersive_mode_confirmations confirmed >/dev/null 2>&1 || true   # no "Viewing full screen" note
 adb shell am force-stop "$PKG" >/dev/null 2>&1; adb logcat -c; adb logcat -b crash -c 2>/dev/null || true
 if ! open_quiz; then [ -n "$SHOT" ] && adb exec-out screencap -p > "$SHOT" 2>/dev/null; echo "skip: couldn't find Start New Game on the app's home screen (the emulator's screen reader view; see the .xml next to this result)" > "$OUT"; cat "$OUT"; exit 0; fi
 for i in $(seq 1 20); do [ -n "$(log saved)$(log failed)" ] && break; sleep 2; done
