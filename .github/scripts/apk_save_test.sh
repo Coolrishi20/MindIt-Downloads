@@ -38,25 +38,33 @@ tap_text(){   # tap the on-screen element whose text contains $1 (the page in th
   done
   return 1
 }
-open_quiz(){ adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1; sleep 8; tap_text "Start New Game"; }
+home_gone(){   # true once the app's home screen ("Run the whole quiz on this tablet") has left the screen
+  adb shell uiautomator dump /sdcard/mindit-ui.xml >/dev/null 2>&1; adb shell cat /sdcard/mindit-ui.xml > /tmp/mindit-ui.xml 2>/dev/null
+  [ -s /tmp/mindit-ui.xml ] && ! grep -q "Run the whole quiz on this tablet" /tmp/mindit-ui.xml; }
+open_quiz(){   # open the app and tap Start New Game; check the quiz page really replaced the home screen (up to 3 taps)
+  adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1; sleep 8
+  for t in 1 2 3; do tap_text "Start New Game" || return 1; sleep 6; home_gone && { OPENED="the quiz page opened (tap $t)"; return 0; }; done
+  OPENED="Start New Game was tapped 3 times but the home screen stayed"; return 1; }
+shot(){ [ -n "$SHOT" ] && adb exec-out screencap -p > "$SHOT" 2>/dev/null; return 0; }
 log(){ adb logcat -d 2>/dev/null | grep -o "MINDIT_FS $1[^\"]*" | head -1; }
 crash(){ adb logcat -d -b crash 2>/dev/null | grep -A3 "FATAL EXCEPTION" | grep -m3 -E "Process: $PKG|Exception|Error" | tr '\n' ' ' | cut -c1-300; }
 
 adb shell settings put secure immersive_mode_confirmations confirmed >/dev/null 2>&1 || true   # no "Viewing full screen" note
 adb shell am force-stop "$PKG" >/dev/null 2>&1; adb logcat -c; adb logcat -b crash -c 2>/dev/null || true
-if ! open_quiz; then [ -n "$SHOT" ] && adb exec-out screencap -p > "$SHOT" 2>/dev/null; echo "skip: couldn't find Start New Game on the app's home screen (the emulator's screen reader view; see the .xml next to this result)" > "$OUT"; cat "$OUT"; exit 0; fi
+OPENED=""
+if ! open_quiz; then shot; echo "skip: ${OPENED:-could not find Start New Game on the home screen} (the emulator's screen reader view; see the .xml next to this result)" > "$OUT"; cat "$OUT"; exit 0; fi
 for i in $(seq 1 20); do [ -n "$(log saved)$(log failed)" ] && break; sleep 2; done
 PAGE=$(log page); SAVED=$(log saved); FAILED=$(log failed); C1=$(crash)
 if [ -z "$PAGE" ]; then
-  [ -n "$C1" ] && { echo "fail: the quiz page crashed the app — $C1" > "$OUT"; cat "$OUT"; exit 0; }
-  echo "skip: the quiz page didn't report (an APK from before build 141, or the page didn't open)" > "$OUT"; cat "$OUT"; exit 0; fi
-if [ -z "$SAVED" ]; then echo "fail: the quiz page opened ($PAGE) but the complete copy wasn't saved in the tablet's files — ${FAILED:-no save reported in 40 s}${C1:+; crash: $C1}" > "$OUT"; cat "$OUT"; exit 0; fi
+  shot; [ -n "$C1" ] && { echo "fail: the quiz page crashed the app — $C1" > "$OUT"; cat "$OUT"; exit 0; }
+  echo "skip: $OPENED but didn't report (an APK from before build 141)" > "$OUT"; cat "$OUT"; exit 0; fi
+if [ -z "$SAVED" ]; then shot; echo "fail: the quiz page opened ($PAGE) but the complete copy wasn't saved in the tablet's files — ${FAILED:-no save reported in 40 s}${C1:+; crash: $C1}" > "$OUT"; cat "$OUT"; exit 0; fi
 # close the app completely and open it again: the copy must come back from the files
 adb shell am force-stop "$PKG"; sleep 2; adb logcat -c
-if ! open_quiz; then echo "skip: saved ($SAVED) but couldn't open the quiz page again" > "$OUT"; cat "$OUT"; exit 0; fi
+if ! open_quiz; then shot; echo "skip: saved ($SAVED) but couldn't open the quiz page again — $OPENED" > "$OUT"; cat "$OUT"; exit 0; fi
 for i in $(seq 1 15); do [ -n "$(log found)" ] && break; sleep 2; done
 FOUND=$(log found); C2=$(crash)
-[ -n "$SHOT" ] && adb exec-out screencap -p > "$SHOT" 2>/dev/null
+shot
 if [ -n "$FOUND" ] && [ "${FOUND#*nothing}" = "$FOUND" ] && [ -z "$C2" ]; then
   echo "ok: $SAVED; after closing and reopening the app: $FOUND" > "$OUT"
 else
