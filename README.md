@@ -3,9 +3,9 @@
 <!-- LATEST-START (this section is rewritten automatically each time a release is published) -->
 ## ⬇️ Download Mind It! — Latest Version
 
-**Mind It! v1.69 · Build 140** · released 19 October 2026
+**Mind It! v1.69 · Build 141** · released 20 October 2026
 
-- 🪟 **Windows laptop** — [Download for Windows](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Windows.exe) (.exe, 69.5 MB)
+- 🪟 **Windows laptop** — [Download for Windows](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Windows.exe) (.exe, 69.6 MB)
 - 📲 **Galaxy Tab (Android)** — [Download for Android](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Android-Galaxy-Tab.apk) (.apk, 2.2 MB)
 - 🍎 **Mac (Apple Silicon)** — [Download for Mac](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Mac-Apple-Silicon.zip) (.zip, 100.8 MB)
 - 🌐 **Web, iPhone or iPad** — [Open the web version](https://coolrishi20.github.io/MindIt-Web/) (nothing to install) · [download the page](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/mindit.html)
