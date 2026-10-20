@@ -34,7 +34,9 @@ jobs:
       - name: Download the APKs
         run: |
           mkdir -p "$RUNNER_TEMP/apks"
-          for t in $TAGS; do gh release download "$t" -R "$GITHUB_REPOSITORY" -p Mind-It-Android-Galaxy-Tab.apk -O "$RUNNER_TEMP/apks/$t.apk"; done
+          for t in $TAGS; do
+            if [ "$t" = staged ]; then git fetch -q --depth=1 origin release-staging && git show FETCH_HEAD:staging/Mind-It-Android-Galaxy-Tab.apk > "$RUNNER_TEMP/apks/staged.apk"; continue; fi   # the build waiting on release-staging
+            gh release download "$t" -R "$GITHUB_REPOSITORY" -p Mind-It-Android-Galaxy-Tab.apk -O "$RUNNER_TEMP/apks/$t.apk"; done
           ls -la "$RUNNER_TEMP/apks"
 
       - name: Enable the emulator's hardware acceleration (KVM)

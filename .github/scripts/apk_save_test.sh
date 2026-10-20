@@ -66,12 +66,12 @@ if [ -z "$SAVED" ]; then shot; echo "fail: the quiz page opened ($PAGE) but the 
 # close the app completely and open it again: the copy must come back from the files
 adb shell am force-stop "$PKG"; sleep 2; adb logcat -c
 if ! open_quiz; then shot; echo "skip: saved ($SAVED) but couldn't open the quiz page again — $OPENED" > "$OUT"; cat "$OUT"; exit 0; fi
-for i in $(seq 1 15); do [ -n "$(log found)" ] && break; sleep 2; done
-FOUND=$(log found); C2=$(crash)
+for i in $(seq 1 30); do [ -n "$(log found)" ] && break; sleep 2; done   # up to 60 s (a slow emulator may take long to load the quiz page again)
+FOUND=$(log found); PAGE2=$(log page); C2=$(crash)
 shot
 if [ -n "$FOUND" ] && [ "${FOUND#*nothing}" = "$FOUND" ] && [ -z "$C2" ]; then
   echo "ok: $SAVED; after closing and reopening the app: $FOUND" > "$OUT"
 else
-  echo "fail: $SAVED, but after reopening the app: ${FOUND:-the page did not read the files}${C2:+; crash: $C2}" > "$OUT"
+  echo "fail: $SAVED, but after reopening the app: ${FOUND:-the page did not read the files} (${PAGE2:-no page report after reopening} · $OPENED)${C2:+; crash: $C2}" > "$OUT"
 fi
 cat "$OUT"
