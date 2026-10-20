@@ -2,7 +2,12 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 141 (12–20 October 2026)
+## Release notes — builds 116 → 142 (12–20 October 2026)
+
+### Build 142 — the tablet app from the laptop, no PIN for your own tablet, a backup after every game (20 October)
+- **📲 Update the Galaxy Tab app from the laptop:** Connect Device → Update the Tablet App shows a code; the tablet downloads the app from the laptop over your Wi-Fi — no internet.
+- **No PIN for your own tablet:** a tablet the laptop already knows connects without the PIN, also after the laptop app restarted.
+- **🛟 A Safety Backup after every game,** by itself, in Backups & Restore.
 
 ### Build 141 — a pre-show checklist, ⚑ Fix Later, a safer Reveal and the Night Recap (20 October)
 - **✅ Pre-show checklist** on Setup: TV, team phones, tablet, sound, questions, today's backup and storage — ticked by itself, with a button for each thing still to do.
