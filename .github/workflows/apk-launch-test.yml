@@ -1,6 +1,7 @@
 # Open published Galaxy Tab APKs on an Android emulator (since build 137): install, tap the icon, check the app is open and
 # running 20 seconds later with no crash. Started by hand: Actions → "Test the tablet app on an Android emulator" → Run workflow
-# → type the release tags; or by pushing a branch named `apk-launch-test` whose file TAGS lists them.
+# → type the release tags; or by pushing a branch named `apk-launch-test` whose file TAGS lists them. The tag "staged" (build 142)
+# tries the build waiting on release-staging instead; the whole Android log is kept with the screenshots.
 # The release workflow runs the same check on every new APK before it publishes (see publish-release.yml).
 name: Test the tablet app on an Android emulator
 
@@ -34,7 +35,9 @@ jobs:
       - name: Download the APKs
         run: |
           mkdir -p "$RUNNER_TEMP/apks"
-          for t in $TAGS; do gh release download "$t" -R "$GITHUB_REPOSITORY" -p Mind-It-Android-Galaxy-Tab.apk -O "$RUNNER_TEMP/apks/$t.apk"; done
+          for t in $TAGS; do
+            if [ "$t" = staged ]; then git fetch -q --depth=1 origin release-staging && git show FETCH_HEAD:staging/Mind-It-Android-Galaxy-Tab.apk > "$RUNNER_TEMP/apks/staged.apk"; continue; fi   # the build waiting on release-staging
+            gh release download "$t" -R "$GITHUB_REPOSITORY" -p Mind-It-Android-Galaxy-Tab.apk -O "$RUNNER_TEMP/apks/$t.apk"; done
           ls -la "$RUNNER_TEMP/apks"
 
       - name: Enable the emulator's hardware acceleration (KVM)
