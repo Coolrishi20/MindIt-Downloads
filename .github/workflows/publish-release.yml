@@ -90,11 +90,20 @@ jobs:
           arch: x86_64
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: bash .github/scripts/apk_launch_test.sh "$RUNNER_TEMP/staging/staging/Mind-It-Android-Galaxy-Tab.apk" "$RUNNER_TEMP/launch.txt" "$RUNNER_TEMP/launch.png"
+          # since build 141: then the quiz page saves a game into the app's own files, and finds it again after the app is reopened
+          script: |
+            bash .github/scripts/apk_launch_test.sh "$RUNNER_TEMP/staging/staging/Mind-It-Android-Galaxy-Tab.apk" "$RUNNER_TEMP/launch.txt" "$RUNNER_TEMP/launch.png"
+            bash .github/scripts/apk_save_test.sh "$RUNNER_TEMP/save.txt" "$RUNNER_TEMP/save.png"
 
       - name: The tablet app must open (nothing is published if it doesn't)
         if: steps.apk.outputs.new == '1'
         run: bash .github/scripts/apk_launch_result.sh "$RUNNER_TEMP/launch.txt" "Build $BUILD's tablet app" block "$RUNNER_TEMP/staging/staging/RELEASE_NOTES.md"
+
+      # Since build 141 (owner: "do them all"): the tablet app's own save files on a real Android runtime. An APK from before
+      # build 141, or an emulator that can't open the quiz page, gives a warning only; a page that can't save or read back blocks.
+      - name: The tablet app must keep a saved game (nothing is published if it doesn't)
+        if: steps.apk.outputs.new == '1'
+        run: bash .github/scripts/apk_save_result.sh "$RUNNER_TEMP/save.txt" "Build $BUILD's tablet app" block "$RUNNER_TEMP/staging/staging/RELEASE_NOTES.md"
 
       - name: Publish the earlier builds (first run only)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.include_history }}

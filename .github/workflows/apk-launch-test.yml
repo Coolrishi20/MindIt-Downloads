@@ -60,6 +60,9 @@ jobs:
           for f in "$RUNNER_TEMP"/results/*.txt; do [ -f "$f" ] || continue; found=1
             bash .github/scripts/apk_launch_result.sh "$f" "$(basename "$f" .txt)" block || bad=1
           done
+          for f in "$RUNNER_TEMP"/results/*.save; do [ -f "$f" ] || continue   # build 141: the save check (an older APK gives a warning only)
+            bash .github/scripts/apk_save_result.sh "$f" "$(basename "$f" .save)" block || bad=1
+          done
           [ "$found" = 1 ] || echo "::warning title=No results::The emulator didn't run the test."
           exit $bad
 
