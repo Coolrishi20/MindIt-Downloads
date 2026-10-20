@@ -2,7 +2,15 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 140 (12–19 October 2026)
+## Release notes — builds 116 → 141 (12–20 October 2026)
+
+### Build 141 — a pre-show checklist, ⚑ Fix Later, a safer Reveal and the Night Recap (20 October)
+- **✅ Pre-show checklist** on Setup: TV, team phones, tablet, sound, questions, today's backup and storage — ticked by itself, with a button for each thing still to do.
+- **⚑ Fix Later:** flag a question during the game (button, F key or a remote); fix it afterwards from the new tab in the Question Database.
+- **Reveal asks first** when no team has answered yet (taking turns, or a Daily Double), so a mis-tap can't spoil the question.
+- **📊 Night Recap:** one slide on the TV after the game — the champion, the standings, the night's numbers and highlights.
+- **Backups & Restore** says where your game is kept and whether the browser may clear it; the page asks the browser to keep it.
+- Behind the scenes: Question Database pictures kept once in the complete copy, a release check that saves and reopens a game in the tablet app, a soak that plays a tiebreaker, and two unused functions removed.
 
 ### Build 140 — four new buttons for the end of a round and the end of the game (19 October)
 - **↩ Undo pop-up** after every score (8 seconds, one tap, no question asked).

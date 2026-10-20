@@ -114,6 +114,11 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 141 — Pre-show checklist, ⚑ Fix Later, early-reveal question, Night Recap, storage line
+
+- **Going back to 140:** the checklist, the Fix Later button and tab, the Reveal question and the Night Recap go away. Saved data needs no converting. Flags stay in the players file (`fixLater`), unused. A complete copy made by 141 opens in 140 (its Question Database pictures come back from the database, as quick saves have since build 111). A game saved on the Night Recap shows an empty TV in 140 — go to the Winner screen in 141 first.
+- **Galaxy Tab:** going back to 140 needs an uninstall (lower versionCode). Make a backup file first. Never 129–134.
+
 ## Build 140 — Undo pop-up, Go to the Final, One More Question, sudden-death tiebreaker, portrait Final reveal
 
 - **Going back to 139:** the four buttons go away; ties are decided by most correct answers only. Saved data needs no converting. 139 ignores the complete copy (the `game-complete-*.json` files in the data folder, the tablet's files and the browser database `mindit-game` stay, unused; nothing else changes), so a quiz with many pictures is again saved without them — make a backup file. A game saved during a tiebreaker shows an empty screen in 139 — finish the tiebreaker (or cancel it) in 140 first. Games recorded with a tiebreaker keep their positions.
