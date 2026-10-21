@@ -114,6 +114,11 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 143 — the tablet offers its own update
+
+- **Going back to 142:** the Update Available card and banner go away; the tablet is updated with the code in Connect Device again. Nothing saved changes.
+- **Galaxy Tab:** going back to 142 needs an uninstall (lower versionCode). Make a backup file first. Never 129–134.
+
 ## Build 142 — the Galaxy Tab app from the laptop, no PIN for a paired tablet, a Safety Backup after every game
 
 - **Going back to 141:** the Update the Tablet App line and button go away, and the tablet's Main Menu asks for the PIN again after a laptop restart. Safety Backups made after a game stay in the list (141 restores them like any other). Nothing else to convert.

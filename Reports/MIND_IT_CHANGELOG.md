@@ -2,7 +2,10 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 142 (12–20 October 2026)
+## Release notes — builds 116 → 143 (12–21 October 2026)
+
+### Build 143 — the tablet offers its own update (21 October)
+- **📲 Update Available on the Galaxy Tab:** when it finds or connects to a laptop that carries a newer tablet app, it says so — **Update** opens the laptop's download page in Chrome; **Later** hides it until the app is opened again.
 
 ### Build 142 — the tablet app from the laptop, no PIN for your own tablet, a backup after every game (20 October)
 - **📲 Update the Galaxy Tab app from the laptop:** Connect Device → Update the Tablet App shows a code; the tablet downloads the app from the laptop over your Wi-Fi — no internet.
