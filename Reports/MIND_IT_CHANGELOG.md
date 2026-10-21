@@ -2,7 +2,10 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 143 (12–21 October 2026)
+## Release notes — builds 116 → 144 (12–21 October 2026)
+
+### Build 144 — move a whole category to another round (21 October)
+- **↔ Move** in Review & Edit Clues: a category swaps places with the one you pick (another round, or the same round to change its column). Questions keep their answers, notes and pictures; values and Daily Double squares stay on the board. **↩ Undo Move** straight after.
 
 ### Build 143 — the tablet offers its own update (21 October)
 - **📲 Update Available on the Galaxy Tab:** when it finds or connects to a laptop that carries a newer tablet app, it says so — **Update** opens the laptop's download page in Chrome; **Later** hides it until the app is opened again.
