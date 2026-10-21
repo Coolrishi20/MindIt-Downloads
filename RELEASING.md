@@ -49,6 +49,10 @@ published and you see a red ✗ in the **Actions** tab. You can still start it b
      load the quiz page; since build 143 also the first time, after the build 143 run gave up at 40 s). **If the copy isn't saved or isn't found again, nothing is published.** If the emulator can't drive the screen (a system dialog it can't answer), the run shows a warning ("skip") and
      the release goes ahead. When it works, the release notes get a line saying so. APKs from before build 141 don't report, so
      they always "skip"; a newer one that doesn't report in 60 s (a very slow emulator) also gives "skip" — try it again with the try-out (below).
+     Both checks count a crash only when Android's crash log names the app's own process (`Process: com.mindit.app`); since build 145,
+     because the emulator's screen reader tool (uiautomator, used to find the buttons) can crash as it closes — the build 145 run stopped
+     on that line ("FATAL EXCEPTION: UiAutomation … Bad file descriptor") while the app kept running and found its saved game. Other
+     processes' crashes are still written in the result line.
    - (started by hand with the box ticked) publishes the earlier builds 125–131 from this repository's history, oldest first, never as "latest";
      each file is checked against the fingerprint recorded when it was built (`releases/history.json`).
    - creates the release **as a draft**, checks every upload, then publishes it as **Latest** — tag `v1.69-build<N>`,

@@ -50,7 +50,12 @@ open_quiz(){   # open the app and tap Start New Game; check the quiz page really
   OPENED="Start New Game was tapped 3 times but the home screen stayed"; return 1; }
 shot(){ [ -n "$SHOT" ] && adb exec-out screencap -p > "$SHOT" 2>/dev/null; return 0; }
 log(){ adb logcat -d 2>/dev/null | grep -o "MINDIT_FS $1[^\"]*" | head -1; }
-crash(){ adb logcat -d -b crash 2>/dev/null | grep -A3 "FATAL EXCEPTION" | grep -m3 -E "Process: $PKG|Exception|Error" | tr '\n' ' ' | cut -c1-300; }
+# A crash counts only when Android's crash log names this app's own process ("Process: com.mindit.app, PID: …").
+# Since build 145: the emulator's screen reader tool (uiautomator, which this check runs to find buttons) can itself crash
+# as it closes ("FATAL EXCEPTION: UiAutomation … Bad file descriptor", a shell process with no "Process:" line); the build 145
+# release run stopped on that line although the app kept running and found its saved game. Other processes' crashes are only noted.
+crash(){ adb logcat -d -b crash 2>/dev/null | awk -v P="$PKG" '/FATAL EXCEPTION/{b=1;m=0;n=0;x="";next} b{n++; if(index($0,"Process: " P ",")||index($0,"Process: " P ":")){m=1;p=$0} else if(m&&x==""&&$0~/(Exception|Error)/)x=$0; if(n>=3){ if(m){print p" "x; exit} b=0 }}' | tr -s ' ' | cut -c1-300; }
+others(){ adb logcat -d -b crash 2>/dev/null | awk -v P="$PKG" '/FATAL EXCEPTION/{t=$0; sub(/.*FATAL EXCEPTION: */,"",t); getline q; if(index(q,"Process: " P ",")||index(q,"Process: " P ":")) next; sub(/.*Process: */,"",q); if(q~/AndroidRuntime/) q=""; o=o (o?", ":"") t (q?" in "q:"")} END{print o}' | cut -c1-200; }
 
 adb shell settings put secure immersive_mode_confirmations confirmed >/dev/null 2>&1 || true   # no "Viewing full screen" note
 adb shell pm grant "$PKG" android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 || true   # no "Allow notifications?" question (Android 13+)
@@ -67,10 +72,10 @@ if [ -z "$SAVED" ]; then shot; echo "fail: the quiz page opened ($PAGE) but the 
 adb shell am force-stop "$PKG"; sleep 2; adb logcat -c
 if ! open_quiz; then shot; echo "skip: saved ($SAVED) but couldn't open the quiz page again — $OPENED" > "$OUT"; cat "$OUT"; exit 0; fi
 for i in $(seq 1 30); do [ -n "$(log found)" ] && break; sleep 2; done   # up to 60 s (a slow emulator may take long to load the quiz page again)
-FOUND=$(log found); PAGE2=$(log page); C2=$(crash)
+FOUND=$(log found); PAGE2=$(log page); C2=$(crash); O2=$(others)
 shot
 if [ -n "$FOUND" ] && [ "${FOUND#*nothing}" = "$FOUND" ] && [ -z "$C2" ]; then
-  echo "ok: $SAVED; after closing and reopening the app: $FOUND" > "$OUT"
+  echo "ok: $SAVED; after closing and reopening the app: $FOUND${O2:+ (not the app: the emulator crash log also has $O2)}" > "$OUT"
 else
   echo "fail: $SAVED, but after reopening the app: ${FOUND:-the page did not read the files} (${PAGE2:-no page report after reopening} · $OPENED)${C2:+; crash: $C2}" > "$OUT"
 fi
