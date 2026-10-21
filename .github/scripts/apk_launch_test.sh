@@ -9,6 +9,12 @@
 #   "skip: …" the emulator had a problem of its own (no device, no space) — the APK was not judged.
 # No line at all also means the emulator itself didn't run the test.
 APK="$1"; OUT="$2"; SHOT="${3:-}"; PKG=com.mindit.app
+# A crash counts only when Android's crash log names this app's own process ("Process: com.mindit.app, PID: …").
+# Since build 145: the emulator's screen reader tool (uiautomator, which the save check runs to find buttons) can itself crash
+# as it closes ("FATAL EXCEPTION: UiAutomation … Bad file descriptor", a shell process with no "Process:" line); the build 145
+# release run stopped on that line although the app kept running and found its saved game. Other processes' crashes are only noted.
+crash(){ adb logcat -d -b crash 2>/dev/null | awk -v P="$PKG" '/FATAL EXCEPTION/{b=1;m=0;n=0;x="";next} b{n++; if(index($0,"Process: " P ",")||index($0,"Process: " P ":")){m=1;p=$0} else if(m&&x==""&&$0~/(Exception|Error)/)x=$0; if(n>=3){ if(m){print p" "x; exit} b=0 }}' | tr -s ' ' | cut -c1-300; }
+others(){ adb logcat -d -b crash 2>/dev/null | awk -v P="$PKG" '/FATAL EXCEPTION/{t=$0; sub(/.*FATAL EXCEPTION: */,"",t); getline q; if(index(q,"Process: " P ",")||index(q,"Process: " P ":")) next; sub(/.*Process: */,"",q); if(q~/AndroidRuntime/) q=""; o=o (o?", ":"") t (q?" in "q:"")} END{print o}' | cut -c1-200; }
 : > "$OUT"
 if ! timeout 120 adb wait-for-device; then echo "skip: no emulator answered (adb wait-for-device)" > "$OUT"; cat "$OUT"; exit 0; fi
 adb uninstall "$PKG" >/dev/null 2>&1 || true
@@ -28,11 +34,11 @@ sleep 20
 PID=$(adb shell pidof "$PKG" 2>/dev/null | tr -d '\r')
 TOP=$(adb shell dumpsys activity activities 2>/dev/null | grep -E "topResumedActivity|mResumedActivity" | head -1 | tr -d '\r' | sed 's/^ *//')
 ONS=$(echo "$TOP" | grep -oE "[A-Za-z0-9_.]+/[A-Za-z0-9_.\$]+" | head -1)
-CRASH=$(adb logcat -d -b crash 2>/dev/null | grep -A3 "FATAL EXCEPTION" | grep -m3 -E "Process: $PKG|Exception|Error" | tr '\n' ' ' | cut -c1-300)
+CRASH=$(crash); OTHER=$(others)
 WV=$(adb logcat -d 2>/dev/null | grep -c -i "chromium\|webview" || true)
 [ -n "$SHOT" ] && adb exec-out screencap -p > "$SHOT" 2>/dev/null
 if [ -n "$PID" ] && [ "${ONS%%/*}" = "$PKG" ] && [ -z "$CRASH" ]; then
-  echo "ok: opened and still open after 20 s (icon → $COMP; on screen: $ONS; process $PID; WebView log lines $WV)" > "$OUT"
+  echo "ok: opened and still open after 20 s (icon → $COMP; on screen: $ONS; process $PID; WebView log lines $WV)${OTHER:+ (not the app: the emulator crash log also has $OTHER)}" > "$OUT"
 else
   echo "fail: icon → ${COMP:-nothing}; on screen: ${ONS:-${TOP:-nothing}}; process: ${PID:-not running}; crash: ${CRASH:-none}" > "$OUT"
 fi
