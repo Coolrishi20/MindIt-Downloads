@@ -45,10 +45,10 @@ published and you see a red ✗ in the **Actions** tab. You can still start it b
    - (since build 141) **saves and reopens a game in the tablet app** on the same emulator: taps **Start New Game**, checks the
      quiz page replaced the home screen, waits for the page to save its complete copy of the game into the app's own files,
      closes the app completely, opens it again and checks the page finds that copy (`.github/scripts/apk_save_test.sh`; the page
-     reports through `MINDIT_FS …` lines in the Android log; it waits up to 60 s after reopening — the emulator can take 20 s to
-     load the quiz page). **If the copy isn't saved or isn't found again, nothing is published.** If the emulator can't drive the screen (a system dialog it can't answer), the run shows a warning ("skip") and
+     reports through `MINDIT_FS …` lines in the Android log; it waits up to 60 s each time — the emulator can take 20 s to
+     load the quiz page; since build 143 also the first time, after the build 143 run gave up at 40 s). **If the copy isn't saved or isn't found again, nothing is published.** If the emulator can't drive the screen (a system dialog it can't answer), the run shows a warning ("skip") and
      the release goes ahead. When it works, the release notes get a line saying so. APKs from before build 141 don't report, so
-     they always "skip".
+     they always "skip"; a newer one that doesn't report in 60 s (a very slow emulator) also gives "skip" — try it again with the try-out (below).
    - (started by hand with the box ticked) publishes the earlier builds 125–131 from this repository's history, oldest first, never as "latest";
      each file is checked against the fingerprint recorded when it was built (`releases/history.json`).
    - creates the release **as a draft**, checks every upload, then publishes it as **Latest** — tag `v1.69-build<N>`,

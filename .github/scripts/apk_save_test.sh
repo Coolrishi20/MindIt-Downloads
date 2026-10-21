@@ -57,12 +57,12 @@ adb shell pm grant "$PKG" android.permission.POST_NOTIFICATIONS >/dev/null 2>&1 
 adb shell am force-stop "$PKG" >/dev/null 2>&1; adb logcat -c; adb logcat -b crash -c 2>/dev/null || true
 OPENED=""
 if ! open_quiz; then shot; echo "skip: ${OPENED:-could not find Start New Game on the home screen} (the emulator's screen reader view; see the .xml next to this result)" > "$OUT"; cat "$OUT"; exit 0; fi
-for i in $(seq 1 20); do [ -n "$(log saved)$(log failed)" ] && break; sleep 2; done
+for i in $(seq 1 30); do [ -n "$(log saved)$(log failed)" ] && break; sleep 2; done   # up to 60 s, as after reopening (build 143: the release run gave up at 40 s; the try-out of the same APK reported after about 20 s)
 PAGE=$(log page); SAVED=$(log saved); FAILED=$(log failed); C1=$(crash)
 if [ -z "$PAGE" ]; then
   shot; [ -n "$C1" ] && { echo "fail: the quiz page crashed the app — $C1" > "$OUT"; cat "$OUT"; exit 0; }
-  echo "skip: $OPENED but didn't report (an APK from before build 141)" > "$OUT"; cat "$OUT"; exit 0; fi
-if [ -z "$SAVED" ]; then shot; echo "fail: the quiz page opened ($PAGE) but the complete copy wasn't saved in the tablet's files — ${FAILED:-no save reported in 40 s}${C1:+; crash: $C1}" > "$OUT"; cat "$OUT"; exit 0; fi
+  echo "skip: $OPENED but didn't report in 60 s (an APK from before build 141, or a very slow emulator)" > "$OUT"; cat "$OUT"; exit 0; fi
+if [ -z "$SAVED" ]; then shot; echo "fail: the quiz page opened ($PAGE) but the complete copy wasn't saved in the tablet's files — ${FAILED:-no save reported in 60 s}${C1:+; crash: $C1}" > "$OUT"; cat "$OUT"; exit 0; fi
 # close the app completely and open it again: the copy must come back from the files
 adb shell am force-stop "$PKG"; sleep 2; adb logcat -c
 if ! open_quiz; then shot; echo "skip: saved ($SAVED) but couldn't open the quiz page again — $OPENED" > "$OUT"; cat "$OUT"; exit 0; fi
