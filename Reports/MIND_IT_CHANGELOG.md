@@ -2,7 +2,14 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 146 (12–22 October 2026)
+## Release notes — builds 116 → 147 (12–23 October 2026)
+
+### Build 147 — every theme a premium TV game show (23 October)
+- **All 12 themes** have their own moments for the title, round intros, questions, correct and wrong answers, a team taking the lead, the Daily Double, back to the board, the Final, the final answer, the standings and the winner — quick for the frequent ones, cinematic for the big ones.
+- **Default Mind It!:** a navy studio with gold light, an LED wall, a layered question card and refined panels.
+- **Comic Book redesigned:** ink black, crimson, hero gold, paper cream and steel blue; POW!, MISS!, KA-POW and hero rays. No pink.
+- **Deeper colours** for Christmas, Eid, Diwali, Summer, Bollywood, Sports, Gaming (cyan and violet) and Movies.
+- Motion Subtle keeps a gentle glow, Off and Reduce Motion none; a slow Wi-Fi TV skips them. No new sounds.
 
 ### Build 146 — a premium look, 🎨 Theme in the top bar, 🎲 team names (22 October)
 - **Premium look on every theme:** glossy tiles, rimmed headers, glowing question and answer, picture frames, a Daily Double spotlight — in each theme's own colours (Comic Book, Gaming and Wizard keep their own style). The same depth on the laptop, tablet and phones.
