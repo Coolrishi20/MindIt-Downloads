@@ -114,6 +114,12 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 146 — premium look, 🎨 Theme menu, 🎲 names, phones and Wi-Fi screens follow Motion
+
+- **Going back to 145:** the look, the menu, the dice, the phone card and banner and the Wi-Fi screens' motion go; phones stop following Motion; the theme picker and the 7-second back-to-board return; the Drive backup works the 145 way (a backup waiting in the settings storage of 145 is simply made again). Nothing saved changes (team names chosen with 🎲 stay — they are ordinary names). Part 3 goes too: the tablet's 🎨, No One Answered returns to 7 s, TVs no longer lighten themselves, Restore from Drive and the Champions card go (the version-2 Google script keeps taking 145's backups).
+- **Laptop and tablet must match:** a 145 laptop or tablet simply doesn't send motion, score or place; phones then show what they showed in 145.
+- **Galaxy Tab:** going back to 145 needs an uninstall (lower versionCode). Make a backup file first. Never 129–134.
+
 ## Build 145 — smoother moments
 
 - **Going back to 144:** the motion goes and the Motion setting is ignored; the timer ring's “Time's up” spills out of the ring again. Nothing saved changes.
