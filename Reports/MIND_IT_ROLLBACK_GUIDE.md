@@ -114,6 +114,11 @@ Build 132 keeps one more small file on the laptop, `handback-state.json` (and `h
 - **Going back to build 131 on the tablet:** an older APK needs an uninstall first (lower versionCode), which deletes the tablet's data — make a backup file on the tablet first (Chapter 22). Build 131 on the tablet still has the two problems fixed in 132 (it can't host again after a quiz moved to the laptop; a switched-off trusted remote cuts off others).
 - **Mixed builds:** the laptop and the tablet must be on the same build to move a quiz between them (132 refuses 131 politely). Everything else — remotes, phones, TVs — works across 131 and 132.
 
+## Build 145 — smoother moments
+
+- **Going back to 144:** the motion goes and the Motion setting is ignored; the timer ring's “Time's up” spills out of the ring again. Nothing saved changes.
+- **Galaxy Tab:** going back to 144 needs an uninstall (lower versionCode). Make a backup file first. Never 129–134.
+
 ## Build 144 — move a whole category to another round
 
 - **Going back to 143:** the ↔ Move button goes; categories already moved stay where they are (nothing new is saved). Nothing saved changes.

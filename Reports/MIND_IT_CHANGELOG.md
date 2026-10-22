@@ -2,7 +2,11 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 144 (12–21 October 2026)
+## Release notes — builds 116 → 145 (12–21 October 2026)
+
+### Build 145 — smoother moments (21 October)
+- **On the TV:** the question grows out of its square; the board fades back; screens fade; a team moving up glows gold; TIME’S UP stamps; a wrong answer shakes; a correct one sparkles; the Now Playing light glides; pictures push in; No One Answered greys out; standings come last → first; the Night Recap rows arrive in turn; a spotlight sweeps for the winner; Intermission flips its digits.
+- **On phones:** screens slide, ✓ LOCKED IN, a your-turn glow and YOU’RE FIRST!. **Tablet and laptop:** fades, button presses, flashes, sliding cards, pop-ups. **Motion: Full / Subtle / Off** in Setup (Full by default).
 
 ### Build 144 — move a whole category to another round (21 October)
 - **↔ Move** in Review & Edit Clues: a category swaps places with the one you pick (another round, or the same round to change its column). Questions keep their answers, notes and pictures; values and Daily Double squares stay on the board. **↩ Undo Move** straight after.
