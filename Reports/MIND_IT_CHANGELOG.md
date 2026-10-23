@@ -2,7 +2,12 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 149 (12–23 October 2026)
+## Release notes — builds 116 → 150 (12–23 October 2026)
+
+### Build 150 — the game sounds like the trailer; the guides and the Mac app; the full test programme (23 October)
+- **Sounds from the trailer's cue sheet:** each moment uses the trailer's sound at the trailer's balance — the ding and a score pop for a right answer, the buzz on a phone's BUZZ IN, a whoosh between screens, the standings tally, the winner's impact and cheer, a sparkle on a theme change.
+- **The five guides** are up to date (Blind It!, Rewind It!, Mastermind It!, The Rascala!, the tagline, App Update, the sounds); the **Mac app** (Apple Silicon) is back in the release.
+- Tested in full: 162 suites (3,792 checks), the Audience View audit, a slow TV, all six stress phases and the 60-minute soak.
 
 ### Build 149 — The Rascala!'s cowboy cat, the tagline, the tablet updates itself, the Mind It! sound pack (23 October)
 - **The Rascala!** is the owner's cowboy cat everywhere; the tie-break always decides (also when every team is level on score).
