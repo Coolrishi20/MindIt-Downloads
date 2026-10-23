@@ -2,7 +2,14 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 148 (12–23 October 2026)
+## Release notes — builds 116 → 149 (12–23 October 2026)
+
+### Build 149 — The Rascala!'s cowboy cat, the tagline, the tablet updates itself, the Mind It! sound pack (23 October)
+- **The Rascala!** is the owner's cowboy cat everywhere; the tie-break always decides (also when every team is level on score).
+- **"Enna Rascala....Mind It!"** under the big logo, as The Rascala!'s line and on the tablet home screen.
+- **The Galaxy Tab app updates itself** from the download page (Settings → App Update; a daily check when online).
+- **The Mind It! sound pack** from the trailer's sound library plus new sounds in the same style; a theme's own sounds stay.
+- Fixes: Rewind It! WRONG button amount, Undo leaves the night's statistics, Special Question after End Game, no second winner fanfare, Champions Card holds the reveal, stuck wheel screen, tablet buttons during the spin, Drive restore time limit; wager screens clear of the theme scenery; faster Title Case; smoother scenery.
 
 ### Build 148 — Blind It!, Rewind It!, Mastermind It!, The Rascala! (23 October)
 - **Blind It!** is the new name of the Daily Double (black sunglasses); same rules. Betting everything is now **Never Mind It!**.
