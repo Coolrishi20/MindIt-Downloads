@@ -2,7 +2,13 @@
 
 **Version 1.69 is frozen**; each Windows/Android build gets a build number (the Android versionCode). This file starts with the release notes for the builds since the last full release check, then the complete development history.
 
-## Release notes — builds 116 → 147 (12–23 October 2026)
+## Release notes — builds 116 → 148 (12–23 October 2026)
+
+### Build 148 — Blind It!, Rewind It!, Mastermind It!, The Rascala! (23 October)
+- **Blind It!** is the new name of the Daily Double (black sunglasses); same rules. Betting everything is now **Never Mind It!**.
+- **Rewind It!** (Setup → 4 · Rounds & Questions → Special Question): the Quizmaster spins a cowboy-hat wheel, 1×–5× the question's value; a wrong answer loses at most 3×; no chips in that game.
+- **Mastermind It!** is the new name of the Final Round (the brain).
+- **The Rascala!** for last place (lowest score, then most wrong answers, then fewest right answers; everyone level → everyone): Naughty Pussy's reveal after the winner, an achievement, and older games worked out too.
 
 ### Build 147 — every theme a premium TV game show (23 October)
 - **All 12 themes** have their own moments for the title, round intros, questions, correct and wrong answers, a team taking the lead, the Daily Double, back to the board, the Final, the final answer, the standings and the winner — quick for the frequent ones, cinematic for the big ones.
