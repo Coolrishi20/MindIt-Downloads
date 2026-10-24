@@ -37,7 +37,13 @@ EXTRA = [
     ("Mind-It-Players-Guide.pdf", "Players' Guide (PDF)"),
     ("Mind-It-QC-Report.pdf", "QC report (PDF)"),
 ]
-LABEL = {n: l for n, l, *_ in PLATFORM + EXTRA}
+# build 152 (owner, 24 Oct 2026: "make it a new apk"): apps a release may carry; when a build doesn't restage one, the previous
+# release's file is kept (and marked), the same as the platform files — a release from before it simply doesn't have it
+OPTIONAL = [
+    ("Mind-It-Android-TV.apk", "Mind It! TV — Mi Box / Android TV audience screen (.apk)", "tvapk"),
+]
+TV_PACKAGE = "com.mindit.tv"
+LABEL = {n: l for n, l, *_ in PLATFORM + EXTRA + OPTIONAL}
 SUMS = "SHA256SUMS.txt"
 
 
@@ -144,6 +150,27 @@ def check_file(path, kind, build):
         if problems:
             fail("the APK would not work on a device:\n  - " + "\n  - ".join(problems[:12]))
         print("APK: %s versionCode %s, versionName %s, original key; on a device: named %r, opens %s" % (pkg, code, vname, info.get("label"), info.get("activity")))
+    elif kind == "tvapk":
+        # Mind It! TV (build 152): its own package, versionCode = the build it was made for (its updater compares that with the
+        # release's build), the original key (so Android installs it over the TV's copy), and the Android TV home-screen entry
+        badging = run(tool("aapt"), "dump", "badging", path)
+        m = re.search(r"package: name='([^']+)' versionCode='(\d+)' versionName='([^']+)'", badging)
+        if not m:
+            fail("cannot read the TV app's package details")
+        pkg, code, vname = m.groups()
+        if pkg != TV_PACKAGE or vname != VERSION or int(code) != int(build):
+            fail("the TV app is %s versionCode %s versionName %s — expected %s %s %s" % (pkg, code, vname, TV_PACKAGE, build, VERSION))
+        if "leanback-launchable-activity:" not in badging:
+            fail("the TV app has no Android TV home-screen entry (LEANBACK_LAUNCHER)")
+        certs = run(tool("apksigner"), "verify", "--print-certs", path)
+        if APK_CERT_SHA256 not in certs.replace(":", "").lower():
+            fail("the TV app is not signed with the original Mind It! key — it would not install over the TV's copy")
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import tv_apk_check
+        problems, info = tv_apk_check.check(path, build)
+        if problems:
+            fail("the TV app would not work on a TV:\n  - " + "\n  - ".join(problems[:12]))
+        print("TV app: %s versionCode %s, versionName %s, original key; on a TV: named %r, opens %s" % (pkg, code, vname, info.get("label"), info.get("activity")))
     elif kind == "mac":
         r = subprocess.run(["unzip", "-tq", path], capture_output=True, text=True)
         if r.returncode != 0:
@@ -194,6 +221,12 @@ def cmd_validate(d, build):
             check_file(p, kind, build)
         else:
             print("--  %-36s not in this build (the previous release's file will be kept, and marked)" % n)
+    for n, _, kind in OPTIONAL:
+        p = os.path.join(d, n)
+        if os.path.exists(p):
+            check_file(p, kind, build)
+        else:
+            print("--  %-36s not in this build (kept from the previous release if it has one)" % n)
     if not os.path.exists(os.path.join(d, "RELEASE_NOTES.md")):
         fail("RELEASE_NOTES.md is missing")
     tag = tag_for(build)
@@ -253,6 +286,14 @@ def cmd_history():
 
 
 # ---------------------------------------------------------------- publish
+def carried_build(prev, n):
+    """the build a carried-over file really comes from: the previous release's label says "(build N, unchanged)" when it
+    was itself carried over"""
+    a = next((a for a in prev["assets"] if a["name"] == n), {})
+    m = re.search(r"\(build (\d+), unchanged\)", a.get("label") or "")
+    return int(m.group(1)) if m else build_of(prev["tag_name"])
+
+
 def cmd_publish(d, build):
     build = int(build)
     tag = tag_for(build)
@@ -265,7 +306,12 @@ def cmd_publish(d, build):
             run("gh", "release", "download", prev["tag_name"], "--repo", REPO, "--pattern", n, "--dir", d)
             carried[n] = build_of(prev["tag_name"])
             print("kept %s from %s" % (n, prev["tag_name"]))
-    names = [n for n, *_ in PLATFORM + EXTRA if os.path.exists(os.path.join(d, n))]
+    for n, _, _ in OPTIONAL:
+        if not os.path.exists(os.path.join(d, n)) and prev and any(a["name"] == n for a in prev["assets"]):
+            run("gh", "release", "download", prev["tag_name"], "--repo", REPO, "--pattern", n, "--dir", d)
+            carried[n] = carried_build(prev, n)
+            print("kept %s from %s" % (n, prev["tag_name"]))
+    names = [n for n, *_ in PLATFORM + EXTRA + OPTIONAL if os.path.exists(os.path.join(d, n))]
     sums = ["%s  %s" % (sha256(os.path.join(d, n)), n) for n in names]
     open(os.path.join(d, SUMS), "w").write("\n".join(sums) + "\n")
     notes = open(os.path.join(d, "RELEASE_NOTES.md")).read().replace("{TAG}", tag).replace("{REPO}", REPO)
@@ -363,7 +409,7 @@ def cmd_readme(build):
         return "- %s **%s** — [%s](%s%s) (%s, %s)%s" % (icon, who, text, L, n, kind, mb(size[n]), note(n))
 
     guides = [(n, l.replace(" (PDF)", "")) for n, l in EXTRA if n in size and "QC" not in n]
-    block = "\n".join([
+    block = "\n".join(x for x in [
         "<!-- LATEST-START (this section is rewritten automatically each time a release is published) -->",
         "## ⬇️ Download Mind It! — Latest Version",
         "",
@@ -372,12 +418,13 @@ def cmd_readme(build):
         item("🪟", "Windows laptop", "Download for Windows", "Mind-It-Windows.exe", ".exe"),
         item("📲", "Galaxy Tab (Android)", "Download for Android", "Mind-It-Android-Galaxy-Tab.apk", ".apk"),
         item("🍎", "Mac (Apple Silicon)", "Download for Mac", "Mind-It-Mac-Apple-Silicon.zip", ".zip"),
+        item("📺", "Mi Box / Android TV (audience screen)", "Download Mind It! TV", "Mind-It-Android-TV.apk", ".apk") if "Mind-It-Android-TV.apk" in size else None,
         "- 🌐 **Web, iPhone or iPad** — [Open the web version](%s) (nothing to install)%s" % (WEB_URL, (" · [download the page](%smindit.html)" % L) if "mindit.html" in size else ""),
         ("- 📘 **Guides** — " + " · ".join("[%s](%s%s)" % (l, L, n) for n, l in guides)) if guides else "",
         "",
         "**[View All Previous Versions →](https://github.com/%s/releases)**" % REPO,
         "<!-- LATEST-END -->",
-    ])
+    ] if x is not None)
     block = re.sub(r"\n{3,}", "\n\n", block)
     text = open("README.md").read()
     new = re.sub(r"<!-- LATEST-START.*?<!-- LATEST-END -->", lambda m: block, text, flags=re.S)
