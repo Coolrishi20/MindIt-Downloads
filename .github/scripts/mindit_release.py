@@ -304,7 +304,7 @@ def cmd_publish(d, build):
             if not prev or not any(a["name"] == n for a in prev["assets"]):
                 fail("%s is missing and no earlier release has it" % n)
             run("gh", "release", "download", prev["tag_name"], "--repo", REPO, "--pattern", n, "--dir", d)
-            carried[n] = build_of(prev["tag_name"])
+            carried[n] = carried_build(prev, n)   # build 152: the build it really comes from, also when carried over twice
             print("kept %s from %s" % (n, prev["tag_name"]))
     for n, _, _ in OPTIONAL:
         if not os.path.exists(os.path.join(d, n)) and prev and any(a["name"] == n for a in prev["assets"]):
