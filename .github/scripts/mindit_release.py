@@ -286,9 +286,18 @@ def cmd_history():
 
 
 # ---------------------------------------------------------------- publish
-def carried_build(prev, n):
+# carried-over files whose label on an earlier release names the wrong build (labels can't be edited from the release
+# job): the build each one really comes from, by its SHA-256
+KNOWN_BUILD = {
+    "adc59a5bba51a70edf11b059de50d42cc65f7564d9a02334705167b8d5df7a90": 150,   # Mind-It-Mac-Apple-Silicon.zip, labelled "build 151" on the build-152 release
+}
+
+
+def carried_build(prev, n, path=None):
     """the build a carried-over file really comes from: the previous release's label says "(build N, unchanged)" when it
     was itself carried over"""
+    if path and os.path.exists(path) and sha256(path) in KNOWN_BUILD:
+        return KNOWN_BUILD[sha256(path)]
     a = next((a for a in prev["assets"] if a["name"] == n), {})
     m = re.search(r"\(build (\d+), unchanged\)", a.get("label") or "")
     return int(m.group(1)) if m else build_of(prev["tag_name"])
@@ -304,12 +313,12 @@ def cmd_publish(d, build):
             if not prev or not any(a["name"] == n for a in prev["assets"]):
                 fail("%s is missing and no earlier release has it" % n)
             run("gh", "release", "download", prev["tag_name"], "--repo", REPO, "--pattern", n, "--dir", d)
-            carried[n] = carried_build(prev, n)   # build 152: the build it really comes from, also when carried over twice
+            carried[n] = carried_build(prev, n, os.path.join(d, n))   # build 152: the build it really comes from, also when carried over twice
             print("kept %s from %s" % (n, prev["tag_name"]))
     for n, _, _ in OPTIONAL:
         if not os.path.exists(os.path.join(d, n)) and prev and any(a["name"] == n for a in prev["assets"]):
             run("gh", "release", "download", prev["tag_name"], "--repo", REPO, "--pattern", n, "--dir", d)
-            carried[n] = carried_build(prev, n)
+            carried[n] = carried_build(prev, n, os.path.join(d, n))
             print("kept %s from %s" % (n, prev["tag_name"]))
     names = [n for n, *_ in PLATFORM + EXTRA + OPTIONAL if os.path.exists(os.path.join(d, n))]
     sums = ["%s  %s" % (sha256(os.path.join(d, n)), n) for n in names]
