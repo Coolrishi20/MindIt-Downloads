@@ -3,11 +3,11 @@
 <!-- LATEST-START (this section is rewritten automatically each time a release is published) -->
 ## ⬇️ Download Mind It! — Latest Version
 
-**Mind It! v1.69 · Build 153** · released 26 October 2026
+**Mind It! v1.69 · Build 154** · released 27 October 2026
 
-- 🪟 **Windows laptop** — [Download for Windows](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Windows.exe) (.exe, 72.7 MB)
-- 📲 **Galaxy Tab (Android)** — [Download for Android](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Android-Galaxy-Tab.apk) (.apk, 2.7 MB)
-- 🍎 **Mac (Apple Silicon)** — [Download for Mac](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Mac-Apple-Silicon.zip) (.zip, 103.9 MB) — *build 150 file, unchanged in build 153*
+- 🪟 **Windows laptop** — [Download for Windows](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Windows.exe) (.exe, 72.8 MB)
+- 📲 **Galaxy Tab (Android)** — [Download for Android](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Android-Galaxy-Tab.apk) (.apk, 2.8 MB)
+- 🍎 **Mac (Apple Silicon)** — [Download for Mac](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Mac-Apple-Silicon.zip) (.zip, 103.9 MB) — *build 150 file, unchanged in build 154*
 - 📺 **Mi Box / Android TV (audience screen)** — [Download Mind It! TV](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Android-TV.apk) (.apk, 223 KB)
 - 🌐 **Web, iPhone or iPad** — [Open the web version](https://coolrishi20.github.io/MindIt-Web/) (nothing to install) · [download the page](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/mindit.html)
 - 📘 **Guides** — [The Complete Idiot's Guide](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Complete-Idiots-Guide.pdf) · [Quick Start](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Quick-Start.pdf) · [Quizmaster Cheat Sheet](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Quizmaster-Cheat-Sheet.pdf) · [Rehearsal Checklist](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Rehearsal-Checklist.pdf) · [Players' Guide](https://github.com/Coolrishi20/MindIt-Downloads/releases/latest/download/Mind-It-Players-Guide.pdf)
