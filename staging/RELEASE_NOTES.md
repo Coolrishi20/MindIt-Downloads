@@ -52,10 +52,10 @@
 - **Mac and the guides:** not rebuilt in this build. The Mac download is still build 150's app, and the guides are still build 152's; both are refreshed in build 155.
 
 ## Checks
-- **Full run on the final files: 192 suites, 4,847 checks, all passed** — browser 120 suites 3,526/3,526; laptop app 72 suites 1,321/1,321. New: fix154 24, fix154r 60 (sound clues, stats, achievements), fix154p 117 (main menu, Prepare tonight's quiz, sub-tabs).
+- **Full run: 192 suites, 4,847 checks, all passed** — browser 120 suites 3,526/3,526; laptop app 72 suites 1,321/1,321. New: fix154 24, fix154r 60 (sound clues, stats, achievements), fix154p 117 (main menu, Prepare tonight's quiz, sub-tabs).
 - **Audience View audit:** 406/406, no issues.
 - **Stress, all six phases:** 24/24 (idle 2, network 6, load 4, lock 2, rapid taps 4, health 6).
-- **Found and fixed on the way:** a direct Wi-Fi TV picture outside a capture threw once The Rascala! badge was on the score cards (fixed; every file rebuilt, the whole programme re-run); two sound tests updated for The Rascala! voice (16 sounds by design).
+- **Found and fixed on the way:** a direct Wi-Fi TV picture outside a capture threw once The Rascala! badge was on the score cards (fixed; every file rebuilt, the whole programme re-run); two sound tests updated for The Rascala! voice (16 sounds by design). Checking the pictures before publishing showed The Rascala! badge over the score with 5–6 teams; publishing was stopped before anything went out, the badge moved to the card's corner, every file rebuilt, and the browser suites and the Audience View audit re-run (browser 120 suites 3,518/3,518; Audience View audit 406/406).
 - **Signed with your original key** (Galaxy Tab and Mind It! TV, versionCode 154); the Windows EXE carries the same page, the build-154 tablet app and the build-154 TV app.
 
 ## Not yet tried for real
