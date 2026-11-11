@@ -74,9 +74,25 @@ if ! open_quiz; then shot; echo "skip: saved ($SAVED) but couldn't open the quiz
 for i in $(seq 1 30); do [ -n "$(log found)" ] && break; sleep 2; done   # up to 60 s (a slow emulator may take long to load the quiz page again)
 FOUND=$(log found); PAGE2=$(log page); C2=$(crash); O2=$(others)
 shot
+# build 182 (owner: "do them all"): build 181's first release run stopped here once — after reopening, the page reported
+# nothing at all in 60 s, and the same files passed on a re-run. Now: the screen and the app's log of that attempt are
+# kept (they go up with the run as "tablet-save-check"), and when the page didn't report at all (no "page" line, no crash)
+# the app is closed and reopened once more. A page that reports but doesn't find its copy still fails at once.
+AGAIN=""
+if [ -z "$FOUND" ] && [ -z "$PAGE2" ] && [ -z "$C2" ]; then
+  [ -n "$SHOT" ] && cp "$SHOT" "${SHOT%.png}-reopen1.png" 2>/dev/null
+  adb logcat -d 2>/dev/null | grep -E "chromium|Console|MINDIT|com\.mindit|ActivityManager|WebView" | tail -400 > "$OUT.reopen1-log.txt" 2>/dev/null
+  AGAIN="the first reopen sent no report in 60 s (${OPENED}) — reopened once more"
+  adb shell am force-stop "$PKG"; sleep 3; adb logcat -c
+  if open_quiz; then
+    for i in $(seq 1 30); do [ -n "$(log found)" ] && break; sleep 2; done
+    FOUND=$(log found); PAGE2=$(log page); C2=$(crash); O2=$(others); shot
+  fi
+fi
+adb logcat -d 2>/dev/null | grep -E "chromium|Console|MINDIT|com\.mindit|ActivityManager|WebView" | tail -400 > "$OUT.log.txt" 2>/dev/null
 if [ -n "$FOUND" ] && [ "${FOUND#*nothing}" = "$FOUND" ] && [ -z "$C2" ]; then
-  echo "ok: $SAVED; after closing and reopening the app: $FOUND${O2:+ (not the app: the emulator crash log also has $O2)}" > "$OUT"
+  echo "ok: $SAVED; after closing and reopening the app: $FOUND${AGAIN:+ ($AGAIN)}${O2:+ (not the app: the emulator crash log also has $O2)}" > "$OUT"
 else
-  echo "fail: $SAVED, but after reopening the app: ${FOUND:-the page did not read the files} (${PAGE2:-no page report after reopening} · $OPENED)${C2:+; crash: $C2}" > "$OUT"
+  echo "fail: $SAVED, but after reopening the app: ${FOUND:-the page did not read the files} (${PAGE2:-no page report after reopening} · $OPENED${AGAIN:+ · $AGAIN})${C2:+; crash: $C2} — screen and log: the run's tablet-save-check files" > "$OUT"
 fi
 cat "$OUT"

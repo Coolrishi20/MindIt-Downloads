@@ -105,6 +105,19 @@ jobs:
         if: steps.apk.outputs.new == '1'
         run: bash .github/scripts/apk_save_result.sh "$RUNNER_TEMP/save.txt" "Build $BUILD's tablet app" block "$RUNNER_TEMP/staging/staging/RELEASE_NOTES.md"
 
+      # Since build 182: the emulator's screens, screen-reader dumps and the app's log go up with the run, whatever happened
+      # (Actions → this run → Artifacts → tablet-save-check), so a stopped release shows why.
+      - name: Keep the tablet checks' screens and logs
+        if: always() && steps.apk.outputs.new == '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tablet-save-check
+          path: |
+            ${{ runner.temp }}/launch.*
+            ${{ runner.temp }}/save*
+          if-no-files-found: ignore
+          retention-days: 30
+
       - name: Publish the earlier builds (first run only)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.include_history }}
         run: python3 .github/scripts/mindit_release.py history
