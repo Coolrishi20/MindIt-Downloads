@@ -105,10 +105,17 @@ jobs:
         if: steps.apk.outputs.new == '1'
         run: bash .github/scripts/apk_save_result.sh "$RUNNER_TEMP/save.txt" "Build $BUILD's tablet app" block "$RUNNER_TEMP/staging/staging/RELEASE_NOTES.md"
 
-      # Since build 182: the emulator's screens, screen-reader dumps and the app's log go up with the run, whatever happened
-      # (Actions → this run → Artifacts → tablet-save-check), so a stopped release shows why.
-      - name: Keep the tablet checks' screens and logs
+      # Since build 182: the emulator's screens, screen-reader dumps and the app's log go up with the run (Actions → this run
+      # → Artifacts → tablet-save-check, kept 3 days) — only when they are needed: a tablet check failed, or the app had to be
+      # reopened a second time before its saved game was found. A release where everything passed first time uploads nothing.
+      - name: Were the tablet checks' screens needed?
+        id: diag
         if: always() && steps.apk.outputs.new == '1'
+        run: |
+          if ls "$RUNNER_TEMP"/save*reopen1* >/dev/null 2>&1; then echo "retry=1" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Keep the tablet checks' screens and logs
+        if: always() && steps.apk.outputs.new == '1' && (failure() || steps.diag.outputs.retry == '1')
         uses: actions/upload-artifact@v4
         with:
           name: tablet-save-check
