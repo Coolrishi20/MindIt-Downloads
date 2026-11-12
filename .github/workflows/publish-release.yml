@@ -116,7 +116,7 @@ jobs:
             ${{ runner.temp }}/launch.*
             ${{ runner.temp }}/save*
           if-no-files-found: ignore
-          retention-days: 30
+          retention-days: 3
 
       - name: Publish the earlier builds (first run only)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.include_history }}
