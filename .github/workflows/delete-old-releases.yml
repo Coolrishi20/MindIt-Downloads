@@ -1,0 +1,70 @@
+# Delete old Mind It! releases — run by hand only (Actions → Delete old releases → Run workflow).
+# Deletes the releases of every build UP TO AND INCLUDING the cut-off you type. Safeguards:
+#   · without "DELETE" in the confirm box it only lists what it would delete (a preview);
+#   · the latest release is never deleted, and the cut-off must be below the latest build;
+#   · only the releases (their notes and files) go — the git tags stay, so the history is kept;
+#   · it never runs by itself: no push, schedule or other trigger.
+# Owner, 12 Nov 2026: "lets delete older than build 170 its obsolete anyways" → a one-click button.
+name: Delete old releases
+
+on:
+  workflow_dispatch:
+    inputs:
+      up_to_build:
+        description: "Delete the releases of builds up to and including this number (e.g. 169 deletes build 169 and older)"
+        required: true
+      confirm:
+        description: "Type DELETE to delete. Anything else only lists what would be deleted."
+        required: false
+        default: "preview"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete (or preview) the old releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          UPTO: ${{ inputs.up_to_build }}
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          set -euo pipefail
+          case "$UPTO" in ''|*[!0-9]*) echo "::error::The cut-off must be a build number, e.g. 169"; exit 1;; esac
+          latest_tag=$(gh api "repos/$REPO/releases/latest" -q .tag_name)
+          latest_build=$(echo "$latest_tag" | sed -n 's/.*-build\([0-9][0-9]*\)$/\1/p')
+          [ -n "$latest_build" ] || { echo "::error::Can't read the latest release's build ($latest_tag)"; exit 1; }
+          if [ "$UPTO" -ge "$latest_build" ]; then echo "::error::The cut-off ($UPTO) must be below the latest build ($latest_build) — the latest release is never deleted."; exit 1; fi
+          gh api --paginate "repos/$REPO/releases?per_page=100" -q '.[] | [.id, .tag_name, (.assets|length), ([.assets[].size]|add // 0)] | @tsv' > all.tsv
+          : > pick.tsv
+          while IFS=$'\t' read -r id tag n size; do
+            b=$(echo "$tag" | sed -n 's/.*-build\([0-9][0-9]*\)$/\1/p')
+            [ -n "$b" ] || continue
+            [ "$tag" = "$latest_tag" ] && continue
+            [ "$b" -le "$UPTO" ] && printf '%s\t%s\t%s\t%s\t%s\n' "$id" "$tag" "$b" "$n" "$size" >> pick.tsv
+          done < all.tsv
+          sort -t$'\t' -k3,3n pick.tsv -o pick.tsv
+          count=$(wc -l < pick.tsv); mb=$(awk -F'\t' '{s+=$5} END{printf "%.0f", s/1e6}' pick.tsv)
+          {
+            echo "## Delete old releases — builds up to $UPTO (latest: build $latest_build, kept)"
+            echo
+            echo "$count releases, $mb MB · $( [ "$CONFIRM" = "DELETE" ] && echo "**deleting**" || echo "**preview only** (type DELETE in the confirm box to delete)" )"
+            echo
+            awk -F'\t' '{printf "- %s — %d files, %.0f MB\n", $2, $4, $5/1e6}' pick.tsv
+          } >> "$GITHUB_STEP_SUMMARY"
+          cat "$GITHUB_STEP_SUMMARY"
+          [ "$CONFIRM" = "DELETE" ] || { echo "Preview only — nothing deleted."; exit 0; }
+          failed=0
+          while IFS=$'\t' read -r id tag b n size; do
+            if gh api -X DELETE "repos/$REPO/releases/$id" >/dev/null; then echo "deleted $tag (tag kept)"; else echo "::warning::could not delete $tag"; failed=1; fi
+          done < pick.tsv
+          left=$(gh api --paginate "repos/$REPO/releases?per_page=100" -q '.[].tag_name' | wc -l)
+          echo "" >> "$GITHUB_STEP_SUMMARY"; echo "Releases left: $left · latest still $(gh api "repos/$REPO/releases/latest" -q .tag_name)" >> "$GITHUB_STEP_SUMMARY"
+          exit $failed
