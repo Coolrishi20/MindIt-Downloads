@@ -75,3 +75,4 @@ jobs:
         with:
           name: launch-screenshots
           path: ${{ runner.temp }}/results/
+          retention-days: 3
