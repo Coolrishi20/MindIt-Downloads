@@ -19,12 +19,12 @@ permissions:
 
 jobs:
   launch:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04   # build 188: named, so a GitHub image change can't move the emulator checks unseen (26.04 ran builds 186–187)
     timeout-minutes: 45
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
 
       - name: Which releases
         run: |
@@ -47,7 +47,7 @@ jobs:
           sudo udevadm trigger --name-match=kvm
 
       - name: Open each APK on Android 15 (emulator)
-        uses: reactivecircus/android-emulator-runner@v2
+        uses: reactivecircus/android-emulator-runner@v2.38.0
         with:
           api-level: 35
           target: google_apis
@@ -71,7 +71,7 @@ jobs:
 
       - name: Keep the screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: launch-screenshots
           path: ${{ runner.temp }}/results/

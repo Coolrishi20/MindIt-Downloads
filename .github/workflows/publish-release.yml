@@ -34,13 +34,13 @@ concurrency:
 jobs:
   publish:
     if: ${{ github.event_name == 'workflow_dispatch' || !github.event.deleted }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04   # build 188: named, so a GitHub image change can't move the emulator checks unseen (26.04 ran builds 186–187)
     timeout-minutes: 60
     env:
       GH_TOKEN: ${{ github.token }}
       REQ_BUILD: ${{ inputs.build }}     # empty when a push started the run
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           ref: main
           fetch-depth: 0
@@ -83,7 +83,7 @@ jobs:
         if: steps.apk.outputs.new == '1'
         continue-on-error: true        # the next step decides
         timeout-minutes: 25
-        uses: reactivecircus/android-emulator-runner@v2
+        uses: reactivecircus/android-emulator-runner@v2.38.0
         with:
           api-level: 35
           target: google_apis
@@ -116,7 +116,7 @@ jobs:
 
       - name: Keep the tablet checks' screens and logs
         if: always() && steps.apk.outputs.new == '1' && (failure() || steps.diag.outputs.retry == '1')
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: tablet-save-check
           path: |

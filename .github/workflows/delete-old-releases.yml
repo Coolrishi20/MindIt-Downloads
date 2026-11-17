@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   delete:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04   # build 188: named, so a GitHub image change can't move the emulator checks unseen (26.04 ran builds 186–187)
     steps:
       - name: Delete (or preview) the old releases
         env:
